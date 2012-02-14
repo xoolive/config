@@ -23,11 +23,6 @@ colors
 autoload -Uz vcs_info
 
 
-
-
-
-
-
 # -------------------------------
 # # define core prompt functions
 #
@@ -110,28 +105,18 @@ if [ $UID -eq 0 ]; then
     rprompt '<>' $PR_RED $PR_RED
 else
     case $HOST in
+        Summertime)
+            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
+            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
+            ;;
         tsugaru)
             lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
-        oxygen*)
-            lprompt '[]' $PR_WHITE $PR_GREEN
-            rprompt '()' $PR_YELLOW $PR_WHITE
+        RD_IT*)
+            lprompt '<>' $PR_BRIGHT_YELLOW $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
+            rprompt '[]' $PR_YELLOW $PR_WHITE
             ;;
-
-        meson*)
-            lprompt '<>' $PR_RED $PR_YELLOW
-            rprompt '<>' $PR_RED $PR_WHITE
-            ;;
-        muon*)
-            lprompt '<>' $PR_RED $PR_BLUE
-            rprompt '<>' $PR_RED $PR_WHITE
-            ;;
-        quark*)
-            lprompt '<>' $PR_RED $PR_GREEN
-            rprompt '<>' $PR_RED $PR_WHITE
-            ;;
-
         *)
             lprompt '{}' $PR_WHITE $PR_WHITE $PR_WHITE
             rprompt '()' $PR_WHITE $PR_WHITE
