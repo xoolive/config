@@ -83,13 +83,13 @@ iabbrev \i \item
 "
 map & gqap
 
-nmap ,f :A<CR>
-nmap ,h :nohl<CR>
-nmap ,p :set invpaste<CR>
-nmap ,s :source $MYVIMRC<CR> 
-nmap ,v :edit $MYVIMRC<CR>
-nmap <S-Tab> :bp<CR>
-nmap <Tab> :bn<CR>
+nmap   ,f        :A<CR>
+nmap   ,h        :nohl<CR>
+nmap   ,p        :set invpaste<CR>
+nmap   ,s        :source $MYVIMRC<CR>
+nmap   ,v        :edit $MYVIMRC<CR>
+nmap   <S-Tab>   :bp<CR>
+nmap   <Tab>     :bn<CR>
 
 inoremap <C-L> <C-X><C-L>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
