@@ -105,7 +105,7 @@ if [ $UID -eq 0 ]; then
     rprompt '<>' $PR_RED $PR_RED
 else
     case $HOST in
-        Summertime)
+        Summertime*)
             lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
