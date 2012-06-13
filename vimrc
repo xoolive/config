@@ -5,7 +5,17 @@
 "     <url:http://vim.sf.net/tips/tip.php?tip_id=<tip> >
 " 
 "
-
+" Useful plugins:
+"    pathogen     https://github.com/tpope/vim-pathogen 
+"                 For management of individually installed plugins in 
+"                 ~/.vim/bundle (or ~\vimfiles\bundle), adding 
+"                 `call pathogen#infect()` to your .vimrc prior to
+"                 `fileype plugin indent on` is the only other setup necessary.
+"    vim-latex   git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+"    tabular      https://github.com/godlygeek/tabular.git
+"    utl          https://github.com/vim-scripts/utl.vim.git
+"    fugitive     https://github.com/tpope/vim-fugitive.git
+"    R-plugin     https://github.com/jcfaria/Vim-R-plugin
 
 let $VIMFILES=expand("$HOME/.vim")
 
@@ -23,30 +33,42 @@ endif
 "
 
 set autoindent
-set backspace=2                " make backspace work normal
+set autochdir
+"set backspace=2                " make backspace work normal
+set backspace=indent,eol,start  " backspace through everything in insert mode
 set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4 
 set clipboard=exclude:.*
+"set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
 set directory=~/.tmp,.,/tmp
 set display=lastline           " open the file where we last closed it
 set encoding=utf8
 set expandtab                  " replace tab by the appropriate nb of spaces
 set fileformat=unix
-set foldenable
-set foldlevel=12
-set foldmethod=indent
+"set foldenable
+"set foldlevel=12
+set foldmethod=syntax
 set grepprg=grep\ -nH\ $*      " necessary for latex
-set gfn=Menlo:h12
-set hidden                     " do not close hidden buffer
+if has("gui_macvim")
+    set gfn=Menlo:h12
+endif
+set hidden                     " ability to switch buffer without saving
 set history=50
 set hlsearch                   " highlight search result
-set ignorecase                 " case insensitive search
+set ignorecase                 " case insensitive searce
 set incsearch                  " show the next search pattern as you type
 set laststatus=2               " always show the status bar
+set lines=41
 set linespace=1                " set the space between two lines (gui only)
-set nocompatible               " do not behave like vi
-set nolist                     " do not show void characters
+set list                       " we do what to show tabs, to ensure we get them
+                               " out of my files
+set listchars=tab:>-,trail:-   " show tabs and trailing
+set magic                      " use regexp in search
+set matchtime=5                " how many tenths of a second to blink
+                               " matching brackets for
+" set mouse=a
+set nocompatible               " no compatibility with legacy vi
 set nostartofline              " do not move to the first char of line
 set ruler                      " show the line,column number
 set scrolloff=3                " minimal number of lines around the cursor
@@ -54,17 +76,34 @@ set sessionoptions+=slash,unix
 set shiftround                 " round indentation to a multiple of sw
 set shiftwidth=4               " number of spaces for indentation
 set shortmess+=I               " no intro message
-set showcmd                    " info in status line
+set showcmd                    " display incomplete commands
 set showmatch                  " briefly jump to the matching (,),[,],{,}
 set smartcase                  " override ignorecase if uppercase present
 set smarttab                   " tab in front of a blank line is rel to sw
 set softtabstop=4              " number of spaces while editing
-set statusline=%2*[%02n]%*\ %f\ %3*%(%m%)%4*%(%r%)%*%=%b\ 0x%B\ \ <%l,%c%V>\ %P
+set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\ 
+"set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+"              | | | | |  |   |      |  |     |    |
+"              | | | | |  |   |      |  |     |    + current
+"              | | | | |  |   |      |  |     |       column
+"              | | | | |  |   |      |  |     +-- current line
+"              | | | | |  |   |      |  +-- current % into file
+"              | | | | |  |   |      +-- current syntax in
+"              | | | | |  |   |          square brackets
+"              | | | | |  |   +-- current fileformat
+"              | | | | |  +-- number of lines
+"              | | | | +-- preview flag in square brackets
+"              | | | +-- help flag in square brackets
+"              | | +-- readonly flag in square brackets
+"              | +-- rodified flag in square brackets
+"              +-- full path to file in the buffer
+
 set suffixes+=.aux,.bak,.bbl,.blg,.brf,.cb,.dvi,.idx,.ilg,.ind,.info,.inx,.log
 set suffixes+=.o,.obj,.out,.swp,.toc,~
 set tabstop=4                  " what is a tab?
 set tags=tags;/                " upward search, up to the root directory
 set textwidth=80               " no more than 80 char per line
+"set ttymouse=xterm2
 set viminfo='20,\"50
 set whichwrap=<,>,[,],h,l
 set wildmode=list:full         " show list and try to complete
@@ -77,19 +116,31 @@ iabbrev #i <C-R>=SmartInclude()<CR>
 iabbrev #d #define
 iabbrev \i \item
 
-
 "
 " map
 "
 map & gqap
 
-nmap   ,f        :A<CR>
-nmap   ,h        :nohl<CR>
-nmap   ,p        :set invpaste<CR>
-nmap   ,s        :source $MYVIMRC<CR>
-nmap   ,v        :edit $MYVIMRC<CR>
-nmap   <S-Tab>   :bp<CR>
-nmap   <Tab>     :bn<CR>
+nmap <F5> :TlistToggle<CR>
+nmap <F6> :TlistUpdate<CR>
+
+nmap ,d :Diff<CR>
+nmap ,f :A<CR>
+nmap ,h :nohl<CR>
+nmap ,l :resize 60<CR>
+nmap ,n :Nl<CR>
+nmap ,r :vertical resize 80<CR>
+nmap ,s :source $MYVIMRC<CR>
+nmap ,u :Utl<CR>
+nmap ,ù :winsize 80 41<CR>
+nmap ,v :edit $MYVIMRC<CR>
+nmap ,w :winsize 161 41<CR>,r
+
+nmap <S-Tab> :bp<CR>
+nmap <Tab> :bn<CR>
+
+" inoremap ,today <C-R>=strftime("%B %d, %Y")<CR>
+" inoremap ,me Xavier Olive
 
 inoremap <C-L> <C-X><C-L>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
@@ -105,17 +156,7 @@ vnoremap <PageUp> 30k
 vnoremap <Right> l
 vnoremap <Up> k
 
-" search forward (*) and backward (#)
-"  TIP #780
-
-vmap <silent> * :<C-U>let old_reg=@"<cr>
-      \gvy/<C-R><C-R>=substitute(
-      \escape(@", '\\/.*$^~[]'), "[ \t\n]\\+", '\\_s\\+', 'g')<CR><CR>
-      \:let @"=old_reg<cr>
-vmap <silent> # :<C-U>let old_reg=@"<cr>
-      \gvy?<C-R><C-R>=substitute(
-      \escape(@", '\\?.*$^~[]'), "[ \t\n]\\+", '\\_s\\+', 'g')<CR><CR>
-      \:let @"=old_reg<cr>
+match ErrorMsg /\%>80v.\+/
 
 "
 " function
@@ -127,16 +168,6 @@ function! s:DiffWithSaved()
     diffthis
     " new for horizontal split
     new | r # | normal 1Gdd
-    diffthis
-    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-endfunction
-
-function! s:DiffWithCheckedOut()
-    let filetype=&ft
-    diffthis
-    " new for horizontal split
-    vnew | r !cvs up -pr BASE #
-    normal 1Gd6d
     diffthis
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
@@ -153,17 +184,6 @@ function! EnhanceSyntax()
     hi def link cppFuncDef Special
 endfunction
 
-function! InsertTabWrapper(direction)
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    elseif "backward" == a:direction
-        return "\<c-p>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
-
 function! SmartInclude()
     let next = nr2char( getchar( 0 ) )
     if next == '"'
@@ -175,15 +195,23 @@ function! SmartInclude()
     return "#include <>\<Left>"
 endfunction
 
+" popup
+function! InsertTabWrapper(direction)
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    elseif "backward" == a:direction
+        return "\<c-p>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
 "
 " command, autocommand
 "
 
 command! Diff call s:DiffWithSaved()
-command! CVSDiff call s:DiffWithCheckedOut()
 command! Nl if (&nu) <Bar> set nonu <Bar> else <Bar> set nu <Bar> endif
-command! ToHtml runtime! syntax/2html.vim
-
 
 " Tags navigation: jump to the file under cursor with <CR>, except in the
 " quickfix window (see <url:vimhelp:quickfix>)
@@ -200,69 +228,58 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 
 autocmd BufEnter *.java set cindent
 autocmd BufEnter *.i setf cpp
+autocmd BufEnter *.R set comments+=b:#'
 autocmd Syntax cpp call EnhanceSyntax()
 
 "
 " let 
 "
 
-let Tlist_Ctags_Cmd="ctags"
+" TagList Settings {
+let Tlist_Auto_Open=0 " let the tag list open automagically
+let Tlist_Compact_Format = 1 " show small menu
+let Tlist_Ctags_Cmd = 'ctags -R --c-kinds=+p --fields=+S' " location of ctags
+let Tlist_Enable_Fold_Column = 0 " do show folding tree
+let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself
+let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
+let Tlist_Sort_Type = "name" " order by
+let Tlist_Use_Left_Window = 1 " split to the right side of the screen
+let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
+" }
 
-let g:EnhCommentifyFirstLineMode = "yes"
-let g:EnhCommentifyPretty = "yes"
+let g:vimrplugin_conqueplugin = 1
+let g:vimrplugin_conquevsplit = 1
+
+let g:EnhCommentifyFirstLineMode   = "yes"
+let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
-let g:EnhCommentifyUseSyntax = "yes"
-let g:mapleader = "`"
-let g:miniBufExplorerMoreThanOne = 3
+let g:EnhCommentifyUseSyntax       = "yes"
+let g:Tex_DefaultTargetFormat      = 'pdf'
 
-let html_use_css = 1
-let java_highlight_java_lang_ids = 1
-let python_highlight_all = 1
+let mapleader                      = '`'
 
-if $SHELL =~ '/\(sh\|csh\|bash\|tcsh\|zsh\)$'
-  let s:path = system("echo /sw/bin:/sw/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/bin:/Users/xo/.bin:/usr/X11R6/bin:$PATH")
-  let $PATH =s:path
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+  nmap <Leader>a_ :Tabularize /<-<CR>
+  vmap <Leader>a_ :Tabularize /<-<CR>
 endif
 
-"
-" Other misc
-" 
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
-set <Home>=[1~
-set <Insert>=[2~
-set <Del>=[3~
-set <End>=[4~
-set <PageUp>=[5~
-set <PageDown>=[6~
-set <F1>=[11~
-set <F2>=[12~
-set <F3>=[13~
-set <F4>=[14~
-set <F5>=[15~
-set <F6>=[17~
-set <F7>=[18~
-set <F8>=[19~
-set <F9>=[20~
-set <F10>=[21~
-set <F11>=[23~
-set <F12>=[24~
-set <S-Tab>=[Z
-map!  <BS>
-" keypad
-set <kEnter>=OM
-set <kDivide>=OQ
-set <kMultiply>=OR
-set <kMinus>=OS
-set <kPlus>=Ol
-set <kPoint>=On
-set <k0>=Op
-set <k1>=Oq
-set <k2>=Or
-set <k3>=Os
-set <k4>=Ot
-set <k5>=Ou
-set <k6>=Ov
-set <k7>=Ow
-set <k8>=Ox
-set <k9>=Oy
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+" Pathogen call for bundle directory
+call pathogen#infect()
 
