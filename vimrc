@@ -59,7 +59,11 @@ set hlsearch                   " highlight search result
 set ignorecase                 " case insensitive searce
 set incsearch                  " show the next search pattern as you type
 set laststatus=2               " always show the status bar
-set lines=41
+if has("gui_macvim")
+    set lines=45
+else
+    set lines=41
+endif
 set linespace=1                " set the space between two lines (gui only)
 set list                       " we do what to show tabs, to ensure we get them
                                " out of my files
