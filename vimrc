@@ -23,10 +23,6 @@ syntax on                      " syntax hilighting
 filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
 
-if has("gui")
-    colorscheme evening
-    au Colorscheme * call UpdateStatusLine()
-endif
 
 "
 " set
@@ -39,6 +35,7 @@ set backspace=indent,eol,start  " backspace through everything in insert mode
 set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4 
 set clipboard=exclude:.*
+set colorcolumn=80
 "set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
 set directory=~/.tmp,.,/tmp
@@ -50,30 +47,23 @@ set fileformat=unix
 "set foldlevel=12
 set foldmethod=syntax
 set grepprg=grep\ -nH\ $*      " necessary for latex
-if has("gui_macvim")
-    set gfn=Menlo:h12
-endif
 set hidden                     " ability to switch buffer without saving
 set history=50
 set hlsearch                   " highlight search result
 set ignorecase                 " case insensitive searce
 set incsearch                  " show the next search pattern as you type
 set laststatus=2               " always show the status bar
-if has("gui_macvim")
-    set lines=45
-else
-    set lines=41
-endif
 set linespace=1                " set the space between two lines (gui only)
 set list                       " we do what to show tabs, to ensure we get them
                                " out of my files
-set listchars=tab:>-,trail:-   " show tabs and trailing
+set listchars=tab:▸-,trail:-   " show tabs and trailing
 set magic                      " use regexp in search
 set matchtime=5                " how many tenths of a second to blink
                                " matching brackets for
 " set mouse=a
 set nocompatible               " no compatibility with legacy vi
 set nostartofline              " do not move to the first char of line
+set omnifunc=cppomnicomplete#Complete
 set ruler                      " show the line,column number
 set scrolloff=3                " minimal number of lines around the cursor
 set sessionoptions+=slash,unix
@@ -108,6 +98,7 @@ set tabstop=4                  " what is a tab?
 set tags=tags;/                " upward search, up to the root directory
 set textwidth=80               " no more than 80 char per line
 "set ttymouse=xterm2
+
 set viminfo='20,\"50
 set whichwrap=<,>,[,],h,l
 set wildmode=list:full         " show list and try to complete
@@ -132,7 +123,8 @@ nmap ,d :Diff<CR>
 nmap ,f :A<CR>
 nmap ,h :nohl<CR>
 nmap ,l :resize 60<CR>
-nmap ,n :Nl<CR>
+nmap ,N :Nl<CR>
+nmap ,n :RNl<CR>
 nmap ,r :vertical resize 80<CR>
 nmap ,s :source $MYVIMRC<CR>
 nmap ,u :Utl<CR>
@@ -150,6 +142,12 @@ inoremap <C-L> <C-X><C-L>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
 inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
 
+nnoremap ,W :%s/\s\+$//<cr>:let @/=''<CR>
+" select until last position
+nnoremap ,V V`]
+" sort css
+" nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
 vnoremap <BS> d
 vnoremap <Down> j
 vnoremap <End> $
@@ -160,7 +158,10 @@ vnoremap <PageUp> 30k
 vnoremap <Right> l
 vnoremap <Up> k
 
-match ErrorMsg /\%>80v.\+/
+" no more than 85 lines
+match ErrorMsg /\%>85v.\+/
+" no trailing spaces
+" match ModeMsg /.\+\s\+$/
 
 "
 " function
@@ -216,6 +217,7 @@ endfunction
 
 command! Diff call s:DiffWithSaved()
 command! Nl if (&nu) <Bar> set nonu <Bar> else <Bar> set nu <Bar> endif
+command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
 
 " Tags navigation: jump to the file under cursor with <CR>, except in the
 " quickfix window (see <url:vimhelp:quickfix>)
@@ -227,7 +229,7 @@ au BufReadPost quickfix  setlocal modifiable
      \ | let @/=g:qf_tmp
      \ | setlocal nomodifiable
 " Jump to last position in the file, see <url:vimhelp:last-position-jump>
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") 
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \ | exe "normal g`\"" | endif
 
 autocmd BufEnter *.java set cindent
@@ -251,16 +253,15 @@ let Tlist_Use_Left_Window = 1 " split to the right side of the screen
 let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
 " }
 
-let g:vimrplugin_conqueplugin = 1
-let g:vimrplugin_conquevsplit = 1
-
+let g:vimrplugin_conqueplugin      = 1
+let g:vimrplugin_conquevsplit      = 1
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 let g:Tex_DefaultTargetFormat      = 'pdf'
-
-let mapleader                      = '`'
+let mapleader                      = ','
+let g:mapleader                    = ','
 
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -286,4 +287,12 @@ endfunction
 
 " Pathogen call for bundle directory
 call pathogen#infect()
+
+if has("gui")
+"     colorscheme evening
+    colorscheme molokai
+    au Colorscheme * call UpdateStatusLine()
+    set gfn=Menlo:h12
+    set lines=45
+endif
 
