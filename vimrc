@@ -6,16 +6,21 @@
 "
 "
 " Useful plugins:
-"    pathogen     https://github.com/tpope/vim-pathogen
-"                 For management of individually installed plugins in
-"                 ~/.vim/bundle (or ~\vimfiles\bundle), adding
-"                 `call pathogen#infect()` to your .vimrc prior to
-"                 `fileype plugin indent on` is the only other setup necessary.
-"    vim-latex   git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
-"    tabular      https://github.com/godlygeek/tabular.git
-"    utl          https://github.com/vim-scripts/utl.vim.git
-"    fugitive     https://github.com/tpope/vim-fugitive.git
-"    R-plugin     https://github.com/jcfaria/Vim-R-plugin
+"    pathogen    https://github.com/tpope/vim-pathogen
+"                For management of individually installed plugins in
+"                ~/.vim/bundle (or ~\vimfiles\bundle), adding
+"                `call pathogen#infect()` to your .vimrc prior to
+"                `filetype plugin indent on` is the only other setup necessary.
+"
+"    ack.vim        https://github.com/mileszs/ack.vim.git
+"    clang-complete git://github.com/Rip-Rip/clang_complete.git
+"    ctrlp.vim      git://github.com/kien/ctrlp.vim.git
+"    tabular        https://github.com/godlygeek/tabular.git
+"    utl.vim        https://github.com/vim-scripts/utl.vim.git
+"    vim-fugitive   https://github.com/tpope/vim-fugitive.git
+"    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+"    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin
+
 
 let $VIMFILES=expand("$HOME/.vim")
 
