@@ -1,14 +1,14 @@
 " Configuration file for vim
-" 
+"
 " When a reference is made to a tip #<tip> then you can access the reference at
 " the following url:
 "     <url:http://vim.sf.net/tips/tip.php?tip_id=<tip> >
-" 
+"
 "
 " Useful plugins:
-"    pathogen     https://github.com/tpope/vim-pathogen 
-"                 For management of individually installed plugins in 
-"                 ~/.vim/bundle (or ~\vimfiles\bundle), adding 
+"    pathogen     https://github.com/tpope/vim-pathogen
+"                 For management of individually installed plugins in
+"                 ~/.vim/bundle (or ~\vimfiles\bundle), adding
 "                 `call pathogen#infect()` to your .vimrc prior to
 "                 `fileype plugin indent on` is the only other setup necessary.
 "    vim-latex   git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
@@ -33,19 +33,20 @@ set autochdir
 "set backspace=2                " make backspace work normal
 set backspace=indent,eol,start  " backspace through everything in insert mode
 set backupdir=~/.tmp,.
-set cinoptions=(0,t0,g0,:0,w1,W4 
+set cinoptions=(0,t0,g0,:0,w1,W4
 set clipboard=exclude:.*
 set colorcolumn=80
-"set cursorline                 " highlight current line
+set completeopt=menu,longest
+" set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
 set directory=~/.tmp,.,/tmp
 set display=lastline           " open the file where we last closed it
 set encoding=utf8
 set expandtab                  " replace tab by the appropriate nb of spaces
 set fileformat=unix
-"set foldenable
-"set foldlevel=12
-set foldmethod=syntax
+" set foldenable
+" set foldlevel=12
+" set foldmethod=syntax
 set grepprg=grep\ -nH\ $*      " necessary for latex
 set hidden                     " ability to switch buffer without saving
 set history=50
@@ -63,7 +64,7 @@ set matchtime=5                " how many tenths of a second to blink
 " set mouse=a
 set nocompatible               " no compatibility with legacy vi
 set nostartofline              " do not move to the first char of line
-set omnifunc=cppomnicomplete#Complete
+" set omnifunc=cppomnicomplete#Complete
 set ruler                      " show the line,column number
 set scrolloff=3                " minimal number of lines around the cursor
 set sessionoptions+=slash,unix
@@ -75,7 +76,7 @@ set showmatch                  " briefly jump to the matching (,),[,],{,}
 set smartcase                  " override ignorecase if uppercase present
 set smarttab                   " tab in front of a blank line is rel to sw
 set softtabstop=4              " number of spaces while editing
-set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\ 
+set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\
 "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 "              | | | | |  |   |      |  |     |    |
 "              | | | | |  |   |      |  |     |    + current
@@ -111,6 +112,10 @@ iabbrev #i <C-R>=SmartInclude()<CR>
 iabbrev #d #define
 iabbrev \i \item
 
+let mapleader   = ','
+let g:mapleader = ','
+let g:ackprg    = "ack-grep -H --nocolor --nogroup --column"
+
 "
 " map
 "
@@ -119,18 +124,30 @@ map & gqap
 nmap <F5> :TlistToggle<CR>
 nmap <F6> :TlistUpdate<CR>
 
-nmap ,d :Diff<CR>
-nmap ,f :A<CR>
-nmap ,h :nohl<CR>
-nmap ,l :resize 60<CR>
-nmap ,N :Nl<CR>
-nmap ,n :RNl<CR>
-nmap ,r :vertical resize 80<CR>
-nmap ,s :source $MYVIMRC<CR>
-nmap ,u :Utl<CR>
-nmap ,ù :winsize 80 41<CR>
-nmap ,v :edit $MYVIMRC<CR>
-nmap ,w :winsize 161 41<CR>,r
+nmap <Leader>b :CtrlPBuffer<CR>
+nmap <Leader>d :Diff<CR>
+nmap <Leader>e :e.<CR>
+nmap <Leader>f :A<CR>
+nmap <Leader>h :nohl<CR>
+nmap <Leader>l :resize 60<CR>
+nmap <Leader>N :Nl<CR>
+nmap <Leader>n :RNl<CR>
+nmap <Leader>r :vertical resize 80<CR>
+nmap <Leader>s :source $MYVIMRC<CR>
+nmap <Leader>u :Utl<CR>
+nmap <Leader>L :winsize 80 45<CR>
+nmap <Leader>v :edit $MYVIMRC<CR>
+nmap <Leader>w :winsize 161 45<CR>,r
+
+nmap <Leader>T :match ErrorMsg /.\+\s\+$/<CR>
+nmap <Leader>8 :match ErrorMsg /\%>85v.\+/<CR>
+
+
+nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+" select until last position
+nnoremap <Leader>V V`]
+" sort css
+" nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
 nmap <S-Tab> :bp<CR>
 nmap <Tab> :bn<CR>
@@ -138,15 +155,10 @@ nmap <Tab> :bn<CR>
 " inoremap ,today <C-R>=strftime("%B %d, %Y")<CR>
 " inoremap ,me Xavier Olive
 
+inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
 inoremap <C-L> <C-X><C-L>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
 inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
-
-nnoremap ,W :%s/\s\+$//<cr>:let @/=''<CR>
-" select until last position
-nnoremap ,V V`]
-" sort css
-" nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
 vnoremap <BS> d
 vnoremap <Down> j
@@ -161,7 +173,7 @@ vnoremap <Up> k
 " no more than 85 lines
 match ErrorMsg /\%>85v.\+/
 " no trailing spaces
-" match ModeMsg /.\+\s\+$/
+" match MoreMsg /.\+\s\+$/
 
 "
 " function
@@ -236,15 +248,19 @@ autocmd BufEnter *.java set cindent
 autocmd BufEnter *.i setf cpp
 autocmd BufEnter *.R set comments+=b:#'
 autocmd Syntax cpp call EnhanceSyntax()
+autocmd BufEnter * set shiftwidth=4 tabstop=4
+autocmd BufEnter *.c,*.cpp,*.h set shiftwidth=2 tabstop=2
+autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
+
 
 "
-" let 
+" let
 "
 
 " TagList Settings {
 let Tlist_Auto_Open=0 " let the tag list open automagically
 let Tlist_Compact_Format = 1 " show small menu
-let Tlist_Ctags_Cmd = 'ctags -R --c-kinds=+p --fields=+S' " location of ctags
+let Tlist_Ctags_Cmd = 'ctags -R --c-kinds=+p --fields=+aiS --extra=+q' " location of ctags
 let Tlist_Enable_Fold_Column = 0 " do show folding tree
 let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself
 let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
@@ -260,8 +276,8 @@ let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 let g:Tex_DefaultTargetFormat      = 'pdf'
-let mapleader                      = ','
-let g:mapleader                    = ','
+
+
 
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -292,7 +308,10 @@ if has("gui")
 "     colorscheme evening
     colorscheme molokai
     au Colorscheme * call UpdateStatusLine()
-    set gfn=Menlo:h12
+    set gfn=Monospace\ 11
+    if has("mac")
+        set gfn=Menlo:h12
+    endif
     set lines=45
 endif
 

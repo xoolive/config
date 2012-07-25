@@ -12,6 +12,7 @@ alias ll="ls -l"
 alias more="less"
 alias psu="ps -U `echo $USER`"
 alias lsn="ls --color=no"
+alias rmswp="find . -name '.*.sw[op]' | xargs rm"
 
 alias -g G="| grep"
 alias -g X="| xargs"

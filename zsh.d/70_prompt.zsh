@@ -1,6 +1,4 @@
-
-
-## git 
+## git
 #!/bin/zsh
 ##
 ## This file was written by Bart Trojanowski <bart@jukie.net>
@@ -49,8 +47,8 @@ FMT_PATH="%R${PR_YELLOW}/%S"              # e.g. ~/repo/subdir
 # check-for-changes can be really slow.
 # you should disable it, if you work with large repositories
 zstyle ':vcs_info:*:prompt:*' check-for-changes true
-zstyle ':vcs_info:*:prompt:*' unstagedstr   '?'  
-zstyle ':vcs_info:*:prompt:*' stagedstr     '+' 
+zstyle ':vcs_info:*:prompt:*' unstagedstr   '?'
+zstyle ':vcs_info:*:prompt:*' stagedstr     '+'
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}" "${FMT_PATH}"
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}" "${FMT_PATH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   "" "%~"
@@ -113,7 +111,11 @@ else
             lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
-        RD_IT*)
+        iesta*)
+            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
+            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
+            ;;
+        iesta-uranos)
             lprompt '<>' $PR_BRIGHT_YELLOW $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_YELLOW $PR_WHITE
             ;;
@@ -133,7 +135,7 @@ PR_GIT_UPDATE=1
 
 # if we do some things on the git
 function zsh_git_prompt_preexec {
-        case "$(history $HISTCMD)" in 
+        case "$(history $HISTCMD)" in
             *git*)
                 PR_GIT_UPDATE=1
                 ;;
