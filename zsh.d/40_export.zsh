@@ -16,5 +16,4 @@ export PROMPT3="Selection ? "
 export PROMPT4="Debug > "                            
 export SPROMPT="You want to correct it : %U%r%u ? (y/n/e/a)"
 export RPROMPT="%T"
-export PATH=$PATH:/opt/local/bin:/usr/local/bin
 

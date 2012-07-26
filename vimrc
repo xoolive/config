@@ -120,6 +120,9 @@ iabbrev \i \item
 let mapleader   = ','
 let g:mapleader = ','
 let g:ackprg    = "ack-grep -H --nocolor --nogroup --column"
+if has("mac")
+    let g:ackprg    = "ack -H --nocolor --nogroup --column"
+endif
 
 "
 " map
@@ -132,7 +135,6 @@ nmap <F6> :TlistUpdate<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
 nmap <Leader>d :Diff<CR>
 nmap <Leader>e :e.<CR>
-nmap <Leader>f :A<CR>
 nmap <Leader>h :nohl<CR>
 nmap <Leader>l :resize 60<CR>
 nmap <Leader>N :Nl<CR>
@@ -141,24 +143,22 @@ nmap <Leader>r :vertical resize 80<CR>
 nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>L :winsize 80 45<CR>
-nmap <Leader>v :edit $MYVIMRC<CR>
 nmap <Leader>w :winsize 161 45<CR>,r
+nmap <Leader>v :edit $MYVIMRC<CR>
 
 nmap <Leader>T :match ErrorMsg /.\+\s\+$/<CR>
 nmap <Leader>8 :match ErrorMsg /\%>85v.\+/<CR>
 
-
+" remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " select until last position
 nnoremap <Leader>V V`]
+
 " sort css
 " nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
 nmap <S-Tab> :bp<CR>
 nmap <Tab> :bn<CR>
-
-" inoremap ,today <C-R>=strftime("%B %d, %Y")<CR>
-" inoremap ,me Xavier Olive
 
 inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
 inoremap <C-L> <C-X><C-L>
@@ -178,7 +178,7 @@ vnoremap <Up> k
 " no more than 85 lines
 match ErrorMsg /\%>85v.\+/
 " no trailing spaces
-" match MoreMsg /.\+\s\+$/
+match MoreMsg /.\+\s\+$/
 
 "
 " function
@@ -263,15 +263,15 @@ autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
 "
 
 " TagList Settings {
-let Tlist_Auto_Open=0 " let the tag list open automagically
-let Tlist_Compact_Format = 1 " show small menu
-let Tlist_Ctags_Cmd = 'ctags -R --c-kinds=+p --fields=+aiS --extra=+q' " location of ctags
-let Tlist_Enable_Fold_Column = 0 " do show folding tree
-let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself
+let Tlist_Auto_Open            = 0 " let the tag list open automagically
+let Tlist_Compact_Format       = 1 " show small menu
+let Tlist_Ctags_Cmd            = 'ctags -R --c-kinds                         = +p --fields = +aiS --extra = +q' " location of ctags
+let Tlist_Enable_Fold_Column   = 0 " do show folding tree
+let Tlist_Exist_OnlyWindow     = 1 " if you are the last, kill yourself
 let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
-let Tlist_Sort_Type = "name" " order by
-let Tlist_Use_Left_Window = 1 " split to the right side of the screen
-let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
+let Tlist_Sort_Type            = "name" " order by
+let Tlist_Use_Left_Window      = 1 " split to the right side of the screen
+let Tlist_WinWidth             = 40 " 40 cols wide, so i can (almost always)
 " }
 
 let g:vimrplugin_conqueplugin      = 1
@@ -282,7 +282,8 @@ let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
-
+" Pathogen call for bundle directory
+call pathogen#infect()
 
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -306,16 +307,16 @@ function! s:align()
   endif
 endfunction
 
-" Pathogen call for bundle directory
-call pathogen#infect()
 
-if has("gui")
+if has("gui_running")
 "     colorscheme evening
     colorscheme molokai
     au Colorscheme * call UpdateStatusLine()
-    set gfn=Monospace\ 11
     if has("mac")
         set gfn=Menlo:h12
+    elseif has("unix")
+        set gfn=Monospace\ 11
+    elseif has("win32")
     endif
     set lines=45
 endif
