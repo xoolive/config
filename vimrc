@@ -20,11 +20,14 @@
 "    vim-fugitive   https://github.com/tpope/vim-fugitive.git
 "    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
 "    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin
+"    vim-surrond    git://github.com/tpope/vim-surround.git
 
 
 let $VIMFILES=expand("$HOME/.vim")
 
 syntax on                      " syntax hilighting
+filetype off
+call pathogen#runtime_append_all_bundles()
 filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
 
@@ -42,6 +45,7 @@ set cinoptions=(0,t0,g0,:0,w1,W4
 set clipboard=exclude:.*
 set colorcolumn=80
 set completeopt=menu,longest
+" set completeopt=menuone,longest,preview
 " set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
 set directory=~/.tmp,.,/tmp
@@ -62,7 +66,7 @@ set laststatus=2               " always show the status bar
 set linespace=1                " set the space between two lines (gui only)
 set list                       " we do what to show tabs, to ensure we get them
                                " out of my files
-set listchars=tab:▸-,trail:-   " show tabs and trailing
+set listchars=tab:▸-,trail:-,eol:¬,extends:❯,precedes:❮   " show tabs and trailing
 set magic                      " use regexp in search
 set matchtime=5                " how many tenths of a second to blink
                                " matching brackets for
@@ -123,6 +127,8 @@ let g:ackprg    = "ack-grep -H --nocolor --nogroup --column"
 if has("mac")
     let g:ackprg    = "ack -H --nocolor --nogroup --column"
 endif
+let g:clang_snippets = 0
+let g:clang_snippets_engine = ''
 
 "
 " map
@@ -145,9 +151,6 @@ nmap <Leader>u :Utl<CR>
 nmap <Leader>L :winsize 80 45<CR>
 nmap <Leader>w :winsize 161 45<CR>,r
 nmap <Leader>v :edit $MYVIMRC<CR>
-
-nmap <Leader>T :match ErrorMsg /.\+\s\+$/<CR>
-nmap <Leader>8 :match ErrorMsg /\%>85v.\+/<CR>
 
 " remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -176,9 +179,14 @@ vnoremap <Right> l
 vnoremap <Up> k
 
 " no more than 85 lines
-match ErrorMsg /\%>85v.\+/
+" match ErrorMsg /\%>85v.\+/
 " no trailing spaces
-match MoreMsg /.\+\s\+$/
+" match MoreMsg /.\+\s\+$/
+" nmap <Leader>T :match ErrorMsg /.\+\s\+$/<CR>
+" nmap <Leader>8 :match ErrorMsg /\%>85v.\+/<CR>
+
+match ErrorMsg /\(.\+\s\+$\|\%>85v.\+\)/
+
 
 "
 " function
@@ -265,7 +273,7 @@ autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
 " TagList Settings {
 let Tlist_Auto_Open            = 0 " let the tag list open automagically
 let Tlist_Compact_Format       = 1 " show small menu
-let Tlist_Ctags_Cmd            = 'ctags -R --c-kinds                         = +p --fields = +aiS --extra = +q' " location of ctags
+let Tlist_Ctags_Cmd            = 'ctags -R --c-kinds=+p --fields=+aiS --extra=+q' " location of ctags
 let Tlist_Enable_Fold_Column   = 0 " do show folding tree
 let Tlist_Exist_OnlyWindow     = 1 " if you are the last, kill yourself
 let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
@@ -283,18 +291,17 @@ let g:EnhCommentifyUseSyntax       = "yes"
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
 " Pathogen call for bundle directory
-call pathogen#infect()
+" call pathogen#infect()
 
-if exists(":Tabularize")
+" if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
   vmap <Leader>a= :Tabularize /=<CR>
   nmap <Leader>a: :Tabularize /:\zs<CR>
   vmap <Leader>a: :Tabularize /:\zs<CR>
   nmap <Leader>a_ :Tabularize /<-<CR>
   vmap <Leader>a_ :Tabularize /<-<CR>
-endif
+" endif
 
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
@@ -307,6 +314,7 @@ function! s:align()
   endif
 endfunction
 
+inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
 if has("gui_running")
 "     colorscheme evening
