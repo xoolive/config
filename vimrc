@@ -317,6 +317,7 @@ if has("gui_running")
     elseif has("unix")
         set gfn=Monospace\ 11
     elseif has("win32")
+        set gfn=Lucida_Console:h10:cANSI
     endif
     set lines=45
 endif
