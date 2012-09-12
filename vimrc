@@ -320,12 +320,14 @@ if has("gui_running")
 "     colorscheme evening
     colorscheme molokai
     au Colorscheme * call UpdateStatusLine()
+    set lines=45
     if has("mac")
         set gfn=Menlo:h12
     elseif has("unix")
         set gfn=Monospace\ 11
     elseif has("win32")
+        set gfn=Lucida_Console:h10:cANSI
+        set lines=55
     endif
-    set lines=45
 endif
 
