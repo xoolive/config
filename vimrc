@@ -12,16 +12,20 @@
 "                `call pathogen#infect()` to your .vimrc prior to
 "                `filetype plugin indent on` is the only other setup necessary.
 "
+"    Conque-Shell   https://github.com/vim-scripts/Conque-Shell.git
+"    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin.git
 "    ack.vim        https://github.com/mileszs/ack.vim.git
-"    clang-complete git://github.com/Rip-Rip/clang_complete.git
-"    ctrlp.vim      git://github.com/kien/ctrlp.vim.git
+"    clang-complete https://github.com/Rip-Rip/clang_complete.git
+"    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
+"    python-mode    https://github.com/klen/python-mode.git
+"    syntastic      https://github.com/scrooloose/syntastic.git
 "    tabular        https://github.com/godlygeek/tabular.git
+"    tagbar         https://github.com/majutsushi/tagbar.git
 "    utl.vim        https://github.com/vim-scripts/utl.vim.git
+"    vim-eunuch     https://github.com/tpope/vim-eunuch.git
 "    vim-fugitive   https://github.com/tpope/vim-fugitive.git
 "    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
-"    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin
-"    vim-surrond    git://github.com/tpope/vim-surround.git
-
+"    vim-surrond    https://github.com/tpope/vim-surround.git
 
 let $VIMFILES=expand("$HOME/.vim")
 
