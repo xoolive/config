@@ -326,6 +326,8 @@ if has("gui_running")
     set lines=45
     if has("mac")
         set gfn=Menlo:h12
+        set gfn=Menlo\ for\ Powerline:h12
+        let g:Powerline_symbols = 'fancy'
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
