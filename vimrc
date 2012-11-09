@@ -28,6 +28,7 @@ let $VIMFILES=expand("$HOME/.vim")
 syntax on                      " syntax hilighting
 filetype off
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
 
@@ -179,15 +180,9 @@ vnoremap <PageUp> 30k
 vnoremap <Right> l
 vnoremap <Up> k
 
-" no more than 85 lines
-" match ErrorMsg /\%>85v.\+/
-" no trailing spaces
-" match MoreMsg /.\+\s\+$/
-" nmap <Leader>T :match ErrorMsg /.\+\s\+$/<CR>
-" nmap <Leader>8 :match ErrorMsg /\%>85v.\+/<CR>
-
-match ErrorMsg /\(.\+\s\+$\|\%>85v.\+\)/
-
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
 "
 " function
@@ -247,13 +242,14 @@ command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
 
 " Tags navigation: jump to the file under cursor with <CR>, except in the
 " quickfix window (see <url:vimhelp:quickfix>)
-au BufReadPost * map <buffer> <CR> g<C-]>
-au BufReadPost quickfix unmap <buffer> <CR>
-au BufReadPost quickfix  setlocal modifiable
-     \ | let g:qf_tmp=@/
-     \ | silent %s/^/\=line(".")." "/
-     \ | let @/=g:qf_tmp
-     \ | setlocal nomodifiable
+" au BufReadPost * map <buffer> <CR> g<C-]>
+" au BufReadPost quickfix unmap <buffer> <CR>
+" au BufReadPost quickfix  setlocal modifiable
+"      \ | let g:qf_tmp=@/
+"      \ | silent %s/^/\=line(".")." "/
+"      \ | let @/=g:qf_tmp
+"      \ | setlocal nomodifiable
+
 " Jump to last position in the file, see <url:vimhelp:last-position-jump>
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \ | exe "normal g`\"" | endif
@@ -326,6 +322,7 @@ if has("gui_running")
         set gfn=Menlo:h12
     elseif has("unix")
         set gfn=Monospace\ 11
+        vertical resize 80
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
         set lines=55
