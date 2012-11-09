@@ -111,13 +111,13 @@ else
             lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
-        iesta*)
+        centurion)
             lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
             rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
-        iesta-uranos)
-            lprompt '<>' $PR_BRIGHT_YELLOW $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
-            rprompt '[]' $PR_YELLOW $PR_WHITE
+        iesta*)
+            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
+            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
         *)
             lprompt '{}' $PR_WHITE $PR_WHITE $PR_WHITE

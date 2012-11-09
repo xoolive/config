@@ -15,6 +15,7 @@
 "    Conque-Shell   https://github.com/vim-scripts/Conque-Shell.git
 "    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin.git
 "    ack.vim        https://github.com/mileszs/ack.vim.git
+"    badwolf        https://github.com/sjl/badwolf.git
 "    clang-complete https://github.com/Rip-Rip/clang_complete.git
 "    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
 "    python-mode    https://github.com/klen/python-mode.git
@@ -25,6 +26,7 @@
 "    vim-eunuch     https://github.com/tpope/vim-eunuch.git
 "    vim-fugitive   https://github.com/tpope/vim-fugitive.git
 "    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+"    vim-powerline  https://github.com/Lokaltog/vim-powerline.git
 "    vim-surrond    https://github.com/tpope/vim-surround.git
 
 let $VIMFILES=expand("$HOME/.vim")
@@ -90,7 +92,7 @@ set showmatch                  " briefly jump to the matching (,),[,],{,}
 set smartcase                  " override ignorecase if uppercase present
 set smarttab                   " tab in front of a blank line is rel to sw
 set softtabstop=4              " number of spaces while editing
-set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\
+" set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\
 "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 "              | | | | |  |   |      |  |     |    |
 "              | | | | |  |   |      |  |     |    + current
@@ -326,6 +328,8 @@ if has("gui_running")
         set gfn=Menlo:h12
     elseif has("unix")
         set gfn=Monospace\ 11
+        set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
+        let g:Powerline_symbols = 'fancy'
         vertical resize 80
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
