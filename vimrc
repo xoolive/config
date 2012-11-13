@@ -157,8 +157,13 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 nmap <Leader>1 :winsize 80 45<CR>
-nmap <Leader>2 :winsize 121 45<CR>,r
-nmap <Leader>3 :winsize 161 45<CR>,r
+nmap <Leader>2 :winsize 121 45<CR>
+nmap <Leader>3 :winsize 161 45<CR>
+if has("win32")
+    nmap <Leader>1 :winsize 80 55<CR>
+    nmap <Leader>2 :winsize 121 55<CR>
+    nmap <Leader>3 :winsize 161 55<CR>
+endif
 
 " remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -327,6 +332,8 @@ if has("gui_running")
         vertical resize 80
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
+        set gfn=Menlo\ for\ Powerline:h11
+        let g:Powerline_symbols = 'fancy'
         set lines=55
     endif
 endif
