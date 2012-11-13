@@ -156,8 +156,13 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 nmap <Leader>1 :winsize 80 45<CR>
-nmap <Leader>2 :winsize 121 45<CR>,r
-nmap <Leader>3 :winsize 161 45<CR>,r
+nmap <Leader>2 :winsize 121 45<CR>
+nmap <Leader>3 :winsize 161 45<CR>
+if has("win32")
+    nmap <Leader>1 :winsize 80 55<CR>
+    nmap <Leader>2 :winsize 121 55<CR>
+    nmap <Leader>3 :winsize 161 55<CR>
+endif
 
 " remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -272,17 +277,9 @@ autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
 " let
 "
 
-" TagList Settings {
-" let Tlist_Auto_Open            = 0 " let the tag list open automagically
-" let Tlist_Compact_Format       = 1 " show small menu
-" let Tlist_Ctags_Cmd            = 'ctags -R --c-kinds=+p --fields=+aiS --extra=+q' " location of ctags
-" let Tlist_Enable_Fold_Column   = 0 " do show folding tree
-" let Tlist_Exist_OnlyWindow     = 1 " if you are the last, kill yourself
-" let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
-" let Tlist_Sort_Type            = "name" " order by
-" let Tlist_Use_Left_Window      = 1 " split to the right side of the screen
-" let Tlist_WinWidth             = 40 " 40 cols wide, so i can (almost always)
-" }
+if has("win32")
+    let tagbar_ctags_bin = '~/Mes Documents/apps/ctags58/ctags'
+endif
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 1
@@ -348,6 +345,8 @@ if has("gui_running")
         vertical resize 80
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
+        set gfn=Menlo\ for\ Powerline:h11
+        let g:Powerline_symbols = 'fancy'
         set lines=55
     endif
 endif

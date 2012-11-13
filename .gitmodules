@@ -1,0 +1,3 @@
+[submodule "vim/bundle/Vim-R-plugin"]
+	path = vim/bundle/Vim-R-plugin
+	url = https://github.com/jcfaria/Vim-R-plugin.git
