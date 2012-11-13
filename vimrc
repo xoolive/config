@@ -18,7 +18,6 @@
 "    badwolf        https://github.com/sjl/badwolf.git
 "    clang-complete https://github.com/Rip-Rip/clang_complete.git
 "    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
-"    python-mode    https://github.com/klen/python-mode.git
 "    syntastic      https://github.com/scrooloose/syntastic.git
 "    tabular        https://github.com/godlygeek/tabular.git
 "    tagbar         https://github.com/majutsushi/tagbar.git
@@ -318,6 +317,20 @@ function! s:align()
 endfunction
 
 inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+let g:tagbar_type_tex = {
+            \ 'ctagstype' : 'latex',
+            \ 'kinds' : [
+            \ 's:sections:1:0',
+            \ 'g:graphics:0:0',
+            \ 'l:labels',
+            \ 'r:refs:1:0',
+            \ 'p:pagerefs:1:0'
+            \ ],
+            \ 'sort' : 0,
+            \ }
+
+set guioptions=F
 
 if has("gui_running")
 "     colorscheme evening
