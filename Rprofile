@@ -10,7 +10,7 @@ updatePrompt <- function(...) {
     dirs <- strsplit(getwd(),"/")[[1]]
     options(menu.graphics=FALSE, 
             prompt=paste("\001[01;32m\002", format(Sys.time(),"%H:%M"),
-                         " R> ", sep=""))
+                         " R> \001[00m\002", sep=""))
     return(invisible(TRUE))
 }
 
