@@ -1,9 +1,6 @@
 [submodule "vim/bundle/Vim-R-plugin"]
 	path = vim/bundle/Vim-R-plugin
 	url = https://github.com/jcfaria/Vim-R-plugin.git
-[submodule "vim/bundle/Conque-Shell"]
-	path = vim/bundle/Conque-Shell
-	url = https://github.com/vim-scripts/Conque-Shell.git
 [submodule "vim/bundle/ack.vim"]
 	path = vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
