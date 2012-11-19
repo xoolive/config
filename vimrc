@@ -272,6 +272,7 @@ autocmd Syntax cpp call EnhanceSyntax()
 autocmd BufEnter * set shiftwidth=4 tabstop=4
 autocmd BufEnter *.c,*.cpp,*.h set shiftwidth=2 tabstop=2
 autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
+autocmd BufEnter *.gamme set filetype=gamme
 
 
 "
@@ -289,6 +290,11 @@ let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 let g:Tex_DefaultTargetFormat      = 'pdf'
+let g:syntastic_error_symbol       = '✗'
+let g:syntastic_warning_symbol     = '⚠'
+let g:syntastic_cpp_config_file    = '.clang_complete'
+let g:tex_flavor                   = 'latex'
+
 
 " Pathogen call for bundle directory
 " call pathogen#infect()
