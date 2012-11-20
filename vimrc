@@ -126,27 +126,20 @@ set wildmode=list:full         " show list and try to complete
 iabbrev #i <C-R>=SmartInclude()<CR>
 iabbrev #d #define
 iabbrev \i \item
-
-let mapleader   = ','
-let g:mapleader = ','
-let g:ackprg    = "ack-grep -H --nocolor --nogroup --column"
-if has("mac")
-    let g:ackprg    = "ack -H --nocolor --nogroup --column"
-endif
-let g:clang_snippets = 0
-let g:clang_snippets_engine = ''
-
 "
 " map
 "
 map & gqap
+
+let mapleader                      = ','
+let g:mapleader                    = ','
 
 nmap <F2> :TagbarToggle<CR>
 " nmap <F5> :TlistToggle<CR>
 " nmap <F6> :TlistUpdate<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
 nmap <Leader>d :Diff<CR>
-nmap <Leader>e :e.<CR>
+nmap <Leader>e :Errors<CR>
 nmap <Leader>h :nohl<CR>
 nmap <Leader>l :resize 60<CR>
 nmap <Leader>N :Nl<CR>
@@ -278,9 +271,6 @@ autocmd BufEnter *.gamme set filetype=gamme
 " let
 "
 
-if has("win32")
-    let tagbar_ctags_bin = '~/Mes Documents/apps/ctags58/ctags'
-endif
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 1
@@ -293,7 +283,17 @@ let g:syntastic_error_symbol       = '✗'
 let g:syntastic_warning_symbol     = '⚠'
 let g:syntastic_cpp_config_file    = '.clang_complete'
 let g:tex_flavor                   = 'latex'
+let g:ackprg                       = "ack-grep -H --nocolor --nogroup --column"
+let g:clang_snippets               = 0
+let g:clang_snippets_engine        = ''
 
+if has("mac")
+    let g:ackprg    = "ack -H --nocolor --nogroup --column"
+endif
+
+if has("win32")
+    let tagbar_ctags_bin = '~/Mes Documents/apps/ctags58/ctags'
+endif
 
 " Pathogen call for bundle directory
 " call pathogen#infect()
