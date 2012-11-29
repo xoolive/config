@@ -40,3 +40,9 @@
 [submodule "vim/bundle/vim-latex"]
 	path = vim/bundle/vim-latex
 	url = git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+[submodule "vim/bundle/screen-vim"]
+	path = vim/bundle/screen-vim
+	url = https://github.com/vim-scripts/Screen-vim---gnu-screentmux
+[submodule "vim/bundle/jedi-vim"]
+	path = vim/bundle/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim
