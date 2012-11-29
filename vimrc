@@ -28,7 +28,8 @@
 "    vim-powerline  https://github.com/Lokaltog/vim-powerline.git
 "    vim-surrond    https://github.com/tpope/vim-surround.git
 
-let $VIMFILES=expand("$HOME/.vim")
+"let $VIMFILES=expand("$HOME/.vim")
+let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
 
 syntax on                      " syntax hilighting
 filetype off
@@ -292,7 +293,7 @@ if has("mac")
 endif
 
 if has("win32")
-    let tagbar_ctags_bin = '~/Mes Documents/apps/ctags58/ctags'
+    let tagbar_ctags_bin = 'D:\xolive\Documents\apps\ctags58\ctags'
 endif
 
 " Pathogen call for bundle directory
@@ -351,7 +352,9 @@ if has("gui_running")
         vertical resize 80
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
-        set gfn=Menlo\ for\ Powerline:h11
+        set gfn=Menlo\ for\ Powerline:h11:cDEFAULT
+        set gfn=Consolas\ for\ Powerline\ FixedD:h11:cDEFAULT
+"         set gfn=Source\ Code\ Pro\ Light:h11:cDEFAULT
         let g:Powerline_symbols = 'fancy'
         set lines=55
     endif
