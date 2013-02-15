@@ -19,6 +19,7 @@
 "    clang-complete https://github.com/Rip-Rip/clang_complete.git
 "    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
 "    jedi-vim       https://github.com/davidhalter/jedi-vim
+"    omlet.vim      https://github.com/vim-scripts/omlet.vim.git
 "    syntastic      https://github.com/scrooloose/syntastic.git
 "    tabular        https://github.com/godlygeek/tabular.git
 "    tagbar         https://github.com/majutsushi/tagbar.git
@@ -29,8 +30,11 @@
 "    vim-powerline  https://github.com/Lokaltog/vim-powerline.git
 "    vim-surrond    https://github.com/tpope/vim-surround.git
 
-"let $VIMFILES=expand("$HOME/.vim")
-let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
+
+if has("win32")
+    let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
+end
+
 
 syntax on                      " syntax hilighting
 filetype off
@@ -46,7 +50,6 @@ behave xterm                   " do not use this stupid select mode
 
 set autoindent
 set autochdir
-"set backspace=2                " make backspace work normal
 set backspace=indent,eol,start  " backspace through everything in insert mode
 set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4
@@ -54,7 +57,6 @@ set clipboard=exclude:.*
 set colorcolumn=81
 set complete+=t
 set completeopt=menu,longest
-" set completeopt=menuone,longest,preview
 " set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
 set directory=~/.tmp,.,/tmp
@@ -62,10 +64,8 @@ set display=lastline           " open the file where we last closed it
 set encoding=utf8
 set expandtab                  " replace tab by the appropriate nb of spaces
 set fileformat=unix
-" set foldenable
-" set foldlevel=12
-" set foldmethod=syntax
 set grepprg=grep\ -nH\ $*      " necessary for latex
+set guioptions=a               " no menus, no icons
 set hidden                     " ability to switch buffer without saving
 set history=50
 set hlsearch                   " highlight search result
@@ -75,14 +75,12 @@ set laststatus=2               " always show the status bar
 set linespace=1                " set the space between two lines (gui only)
 set list                       " we do what to show tabs, to ensure we get them
                                " out of my files
-set listchars=tab:▸-,trail:-,eol:¬,extends:❯,precedes:❮   " show tabs and trailing
+set listchars=tab:▸-,trail:-,eol:¬,extends:❯,precedes:❮ " show tabs and trailing
 set magic                      " use regexp in search
 set matchtime=5                " how many tenths of a second to blink
                                " matching brackets for
-" set mouse=a
 set nocompatible               " no compatibility with legacy vi
 set nostartofline              " do not move to the first char of line
-" set omnifunc=cppomnicomplete#Complete
 set ruler                      " show the line,column number
 set scrolloff=3                " minimal number of lines around the cursor
 set sessionoptions+=slash,unix
@@ -94,30 +92,11 @@ set showmatch                  " briefly jump to the matching (,),[,],{,}
 set smartcase                  " override ignorecase if uppercase present
 set smarttab                   " tab in front of a blank line is rel to sw
 set softtabstop=4              " number of spaces while editing
-" set statusline=%2*[%02n]%*\ %f\ (%L)\ %3*%(%m%)%4*%(%r%)%*\ %{fugitive#statusline()}%=\ \ <%l,%c%V>\ %P\
-"set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    + current
-"              | | | | |  |   |      |  |     |       column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax in
-"              | | | | |  |   |          square brackets
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
-
 set suffixes+=.aux,.bak,.bbl,.blg,.brf,.cb,.dvi,.idx,.ilg,.ind,.info,.inx,.log
 set suffixes+=.o,.obj,.out,.swp,.toc,~
 set tabstop=4                  " what is a tab?
 set tags=tags;/                " upward search, up to the root directory
 set textwidth=80               " no more than 80 char per line
-"set ttymouse=xterm2
-
 set viminfo='20,\"50
 set whichwrap=<,>,[,],h,l
 set wildmode=list:full         " show list and try to complete
@@ -129,20 +108,27 @@ set wildmode=list:full         " show list and try to complete
 iabbrev #i <C-R>=SmartInclude()<CR>
 iabbrev #d #define
 iabbrev \i \item
-"
-" map
-"
-map & gqap
 
 
-
+" Better to put it around the top
 let mapleader                 = ','
 let maplocalleader            = ','
 let g:mapleader               = ','
 
+"
+" map
+"
+
+map & gqap
+
+" Calling accidentally help is so annoying!!
+map <F1> <Esc>
+imap <F1> <Esc>
+
 nmap <F2> :TagbarToggle<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
-nmap <Leader>d :Diff<CR>
+nmap <Leader>d :DiffSaved<CR>
+nmap <Leader>D :DiffSVN<CR>
 nmap <Leader>e :Errors<CR>
 nmap <Leader>h :nohl<CR>
 nmap <Leader>l :resize 60<CR>
@@ -152,10 +138,16 @@ nmap <Leader>r :vertical resize 81<CR>
 nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
-nmap <Leader>1 :winsize 81 45<CR>
-nmap <Leader>2 :winsize 121 45<CR>
-nmap <Leader>3 :winsize 161 45<CR>
-if has("win32")
+
+if has("unix")
+    nmap <Leader>1 :winsize 81 45<CR>
+    nmap <Leader>2 :winsize 121 45<CR>
+    nmap <Leader>3 :winsize 161 45<CR>
+elseif has("mac")
+    nmap <Leader>1 :winsize 81 50<CR>
+    nmap <Leader>2 :winsize 121 50<CR>
+    nmap <Leader>3 :winsize 161 50<CR>
+elseif has("win32")
     nmap <Leader>1 :winsize 81 55<CR>
     nmap <Leader>2 :winsize 121 55<CR>
     nmap <Leader>3 :winsize 161 55<CR>
@@ -163,20 +155,34 @@ endif
 
 " remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
 " select until last position
 nnoremap <Leader>V V`]
 
 " sort css
 " nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
+" can't work anymore without those
 nmap <S-Tab> :bp<CR>
-nmap <Tab> :bn<CR>
+nmap <Tab>   :bn<CR>
 
+" play with tabularize
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a_ :Tabularize /<-<CR>
+vmap <Leader>a_ :Tabularize /<-<CR>
+
+inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+" play with completion
 inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
 inoremap <C-L> <C-X><C-L>
 inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
 inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
 
+" remap basic moves
 vnoremap <BS> d
 vnoremap <Down> j
 vnoremap <End> $
@@ -189,6 +195,7 @@ vnoremap <Up> k
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+" Highlight characters over column 85
 match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
 "
@@ -199,17 +206,20 @@ match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 function! s:DiffWithSaved()
     let filetype=&ft
     diffthis
-    " new for horizontal split
-    new | r # | normal 1Gdd
+    vnew | r # | normal 1Gdd
     diffthis
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
+com! DiffSaved call s:DiffWithSaved()
 
-function! UpdateStatusLine()
-    hi User2 cterm=NONE ctermfg=yellow ctermbg=black guifg=yellow guibg=black
-    hi User3 cterm=NONE ctermfg=black ctermbg=red guifg=black guibg=red
-    hi User4 cterm=NONE ctermfg=green ctermbg=black guifg=green guibg=black
+function! s:DiffWithSVNCheckedOut()
+  let filetype=&ft
+  diffthis
+  vnew | exe "%!svn cat " . expand("#:p:h")
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
+com! DiffSVN call s:DiffWithSVNCheckedOut()
 
 " Add highlighting for function definition in C++
 function! EnhanceSyntax()
@@ -217,6 +227,7 @@ function! EnhanceSyntax()
     hi def link cppFuncDef Special
 endfunction
 
+" Convenient for #include in c/cpp
 function! SmartInclude()
     let next = nr2char( getchar( 0 ) )
     if next == '"'
@@ -239,23 +250,25 @@ function! InsertTabWrapper(direction)
         return "\<c-n>"
     endif
 endfunction
+
+" Tabularize related
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
 "
 " command, autocommand
 "
 
-command! Diff call s:DiffWithSaved()
 command! Nl if (&nu) <Bar> set nonu <Bar> else <Bar> set nu <Bar> endif
 command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
-
-" Tags navigation: jump to the file under cursor with <CR>, except in the
-" quickfix window (see <url:vimhelp:quickfix>)
-" au BufReadPost * map <buffer> <CR> g<C-]>
-" au BufReadPost quickfix unmap <buffer> <CR>
-" au BufReadPost quickfix  setlocal modifiable
-"      \ | let g:qf_tmp=@/
-"      \ | silent %s/^/\=line(".")." "/
-"      \ | let @/=g:qf_tmp
-"      \ | setlocal nomodifiable
 
 " Jump to last position in the file, see <url:vimhelp:last-position-jump>
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -278,93 +291,60 @@ autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
+
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
+
+let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
+
 let g:syntastic_error_symbol       = '✗'
 let g:syntastic_warning_symbol     = '⚠'
 let g:syntastic_cpp_config_file    = '.clang_complete'
-let g:tex_flavor                   = 'latex'
-let g:ackprg                       = "ack-grep -H --nocolor --nogroup --column"
+let loaded_tex_syntax_checker      = 0 " stop lacheck, this is just lame!
+
+
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
-let loaded_tex_syntax_checker      = 0 " stop lacheck, this is just lame!
-let omlet_indent_let               = 0
-" let g:pymode_lint                = 0
-" let g:pymode_lint_write            = 0
-" let g:pymode_folding               = 0
-" let g:pymode_syntax                = 0
-" let g:pymode_options               = 0
-" let g:pymode_paths                 = ['D:\xolive\Documents\svn\P2ROTECT\lib\site-packages']
 
-if has("mac")
+let omlet_indent_let               = 0
+
+if has("unix")
+
+    let g:ackprg              = "ack-grep -H --nocolor --nogroup --column"
+
+elseif has("mac")
+
     let g:ackprg              = "ack -H --nocolor --nogroup --column"
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
-endif
 
-if has("win32")
-    let g:ackprg    = "D:\\xolive\\Documents\\apps\\ack.bat -H --nocolor --nogroup --column"
+elseif has("win32")
+
+    let g:ackprg = "D:\\xolive\\Documents\\apps\\ack.bat -H --nocolor --nogroup --column"
     let tagbar_ctags_bin = 'D:\xolive\Documents\apps\ctags58\ctags'
+
 endif
 
-" Pathogen call for bundle directory
-" call pathogen#infect()
-
-" if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:\zs<CR>
-  vmap <Leader>a: :Tabularize /:\zs<CR>
-  nmap <Leader>a_ :Tabularize /<-<CR>
-  vmap <Leader>a_ :Tabularize /<-<CR>
-" endif
-
-
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunction
-
-inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-" let g:tagbar_type_tex = {
-"             \ 'ctagstype' : 'latex',
-"             \ 'kinds' : [
-"             \ 's:sections:1:0',
-"             \ 'g:graphics:0:0',
-"             \ 'l:labels',
-"             \ 'r:refs:1:0',
-"             \ 'p:pagerefs:1:0'
-"             \ ],
-"             \ 'sort' : 0,
-"             \ }
-
-set guioptions=a
 
 if has("gui_running")
-"     colorscheme evening
+
     colorscheme molokai
-    au Colorscheme * call UpdateStatusLine()
-    set lines=45
+
     if has("mac")
         set gfn=Menlo:h12
 "         set gfn=Source\ Code\ Pro\ Light:h13
         set gfn=Menlo\ for\ Powerline:h12
         let g:Powerline_symbols = 'fancy'
+        set lines=50
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
         let g:Powerline_symbols = 'fancy'
-        vertical resize 81
+        set lines=45
+"         vertical resize 81
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
         set gfn=Menlo\ for\ Powerline:h11:cDEFAULT
