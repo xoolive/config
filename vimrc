@@ -139,14 +139,14 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 
-if has("unix")
-    nmap <Leader>1 :winsize 81 45<CR>
-    nmap <Leader>2 :winsize 121 45<CR>
-    nmap <Leader>3 :winsize 161 45<CR>
-elseif has("mac")
+if has("mac")
     nmap <Leader>1 :winsize 81 50<CR>
     nmap <Leader>2 :winsize 121 50<CR>
     nmap <Leader>3 :winsize 161 50<CR>
+elseif has("unix")
+    nmap <Leader>1 :winsize 81 45<CR>
+    nmap <Leader>2 :winsize 121 45<CR>
+    nmap <Leader>3 :winsize 161 45<CR>
 elseif has("win32")
     nmap <Leader>1 :winsize 81 55<CR>
     nmap <Leader>2 :winsize 121 55<CR>
@@ -311,15 +311,15 @@ let g:clang_snippets_engine        = ''
 
 let omlet_indent_let               = 0
 
-if has("unix")
-
-    let g:ackprg              = "ack-grep -H --nocolor --nogroup --column"
-
-elseif has("mac")
+if has("mac")
 
     let g:ackprg              = "ack -H --nocolor --nogroup --column"
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
+
+elseif has("unix")
+
+    let g:ackprg              = "ack-grep -H --nocolor --nogroup --column"
 
 elseif has("win32")
 
