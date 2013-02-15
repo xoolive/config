@@ -131,8 +131,10 @@ iabbrev \i \item
 "
 map & gqap
 
-let mapleader                      = ','
-let g:mapleader                    = ','
+let mapleader      = ','
+let maplocalleader = ','
+let g:mapleader    = ','
+let loaded_tex_syntax_checker = 0
 
 nmap <F2> :TagbarToggle<CR>
 " nmap <F5> :TlistToggle<CR>
@@ -263,6 +265,7 @@ autocmd BufEnter *.R set comments+=b:#'
 autocmd Syntax cpp call EnhanceSyntax()
 autocmd BufEnter * set shiftwidth=4 tabstop=4
 autocmd BufEnter *.c,*.cpp,*.h set shiftwidth=2 tabstop=2
+autocmd Syntax ocaml set shiftwidth=2 tabstop=2
 autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufEnter *.gamme set filetype=gamme
 
@@ -321,19 +324,19 @@ endfunction
 
 inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
-let g:tagbar_type_tex = {
-            \ 'ctagstype' : 'latex',
-            \ 'kinds' : [
-            \ 's:sections:1:0',
-            \ 'g:graphics:0:0',
-            \ 'l:labels',
-            \ 'r:refs:1:0',
-            \ 'p:pagerefs:1:0'
-            \ ],
-            \ 'sort' : 0,
-            \ }
+" let g:tagbar_type_tex = {
+"             \ 'ctagstype' : 'latex',
+"             \ 'kinds' : [
+"             \ 's:sections:1:0',
+"             \ 'g:graphics:0:0',
+"             \ 'l:labels',
+"             \ 'r:refs:1:0',
+"             \ 'p:pagerefs:1:0'
+"             \ ],
+"             \ 'sort' : 0,
+"             \ }
 
-set guioptions=F
+set guioptions=a
 
 if has("gui_running")
 "     colorscheme evening
