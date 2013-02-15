@@ -18,6 +18,7 @@
 "    badwolf        https://github.com/sjl/badwolf.git
 "    clang-complete https://github.com/Rip-Rip/clang_complete.git
 "    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
+"    jedi-vim       https://github.com/davidhalter/jedi-vim
 "    syntastic      https://github.com/scrooloose/syntastic.git
 "    tabular        https://github.com/godlygeek/tabular.git
 "    tagbar         https://github.com/majutsushi/tagbar.git
@@ -49,7 +50,7 @@ set backspace=indent,eol,start  " backspace through everything in insert mode
 set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4
 set clipboard=exclude:.*
-set colorcolumn=80
+set colorcolumn=81
 set completeopt=menu,longest
 " set completeopt=menuone,longest,preview
 " set cursorline                 " highlight current line
@@ -137,8 +138,6 @@ let g:mapleader    = ','
 let loaded_tex_syntax_checker = 0
 
 nmap <F2> :TagbarToggle<CR>
-" nmap <F5> :TlistToggle<CR>
-" nmap <F6> :TlistUpdate<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
 nmap <Leader>d :Diff<CR>
 nmap <Leader>e :Errors<CR>
@@ -146,15 +145,15 @@ nmap <Leader>h :nohl<CR>
 nmap <Leader>l :resize 60<CR>
 nmap <Leader>N :Nl<CR>
 nmap <Leader>n :RNl<CR>
-nmap <Leader>r :vertical resize 80<CR>
+nmap <Leader>r :vertical resize 81<CR>
 nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
-nmap <Leader>1 :winsize 80 45<CR>
+nmap <Leader>1 :winsize 81 45<CR>
 nmap <Leader>2 :winsize 121 45<CR>
 nmap <Leader>3 :winsize 161 45<CR>
 if has("win32")
-    nmap <Leader>1 :winsize 80 55<CR>
+    nmap <Leader>1 :winsize 81 55<CR>
     nmap <Leader>2 :winsize 121 55<CR>
     nmap <Leader>3 :winsize 161 55<CR>
 endif
@@ -259,24 +258,23 @@ command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \ | exe "normal g`\"" | endif
 
-autocmd BufEnter *.java set cindent
-autocmd BufEnter *.i setf cpp
-autocmd BufEnter *.R set comments+=b:#'
-autocmd Syntax cpp call EnhanceSyntax()
-autocmd BufEnter * set shiftwidth=4 tabstop=4
-autocmd BufEnter *.c,*.cpp,*.h set shiftwidth=2 tabstop=2
-autocmd Syntax ocaml set shiftwidth=2 tabstop=2
-autocmd BufEnter CMakeLists.txt set comments+=b:#' shiftwidth=2 tabstop=2
-autocmd BufEnter *.gamme set filetype=gamme
-
+autocmd BufEnter *               set  shiftwidth=4 tabstop=4
+autocmd BufEnter *.R             set  comments+=b:#'
+autocmd BufEnter *.c,*.cpp,*.h   set  shiftwidth=2 tabstop=2
+autocmd BufEnter *.gamme         set  filetype=gamme
+autocmd BufEnter *.i             setf cpp
+autocmd BufEnter *.java          set  cindent
+autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
+autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
+autocmd Syntax cpp               call EnhanceSyntax()
+autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 
 "
 " let
 "
 
-
 let g:vimrplugin_conqueplugin      = 1
-let g:vimrplugin_conquevsplit      = 1
+let g:vimrplugin_conquevsplit      = 0
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
@@ -289,6 +287,7 @@ let g:tex_flavor                   = 'latex'
 let g:ackprg                       = "ack-grep -H --nocolor --nogroup --column"
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
+let loaded_tex_syntax_checker      = 1 " stop lacheck, this is just lame!
 
 if has("mac")
     let g:ackprg    = "ack -H --nocolor --nogroup --column"
@@ -345,13 +344,14 @@ if has("gui_running")
     set lines=45
     if has("mac")
         set gfn=Menlo:h12
+"         set gfn=Source\ Code\ Pro\ Light:h13
         set gfn=Menlo\ for\ Powerline:h12
         let g:Powerline_symbols = 'fancy'
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
         let g:Powerline_symbols = 'fancy'
-        vertical resize 80
+        vertical resize 81
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
         set gfn=Menlo\ for\ Powerline:h11
