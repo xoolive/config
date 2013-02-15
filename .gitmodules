@@ -40,6 +40,9 @@
 [submodule "vim/bundle/vim-latex"]
 	path = vim/bundle/vim-latex
 	url = git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
+[submodule "vim/bundle/omlet.vim"]
+	path = vim/bundle/omlet.vim
+	url = https://github.com/vim-scripts/omlet.vim.git
 [submodule "vim/bundle/screen-vim"]
 	path = vim/bundle/screen-vim
 	url = https://github.com/vim-scripts/Screen-vim---gnu-screentmux

@@ -29,7 +29,8 @@
 "    vim-powerline  https://github.com/Lokaltog/vim-powerline.git
 "    vim-surrond    https://github.com/tpope/vim-surround.git
 
-let $VIMFILES=expand("$HOME/.vim")
+"let $VIMFILES=expand("$HOME/.vim")
+let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
 
 syntax on                      " syntax hilighting
 filetype off
@@ -51,6 +52,7 @@ set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4
 set clipboard=exclude:.*
 set colorcolumn=81
+set complete+=t
 set completeopt=menu,longest
 " set completeopt=menuone,longest,preview
 " set cursorline                 " highlight current line
@@ -132,12 +134,11 @@ iabbrev \i \item
 "
 map & gqap
 
-let mapleader                      = ','
-let g:mapleader                    = ','
-let g:Tex_ViewRule_pdf             = 'Preview'
-let g:Tex_CompileRule_pdf          = 'xelatex'
 
-let omlet_indent_let = 0
+
+let mapleader                 = ','
+let maplocalleader            = ','
+let g:mapleader               = ','
 
 nmap <F2> :TagbarToggle<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
@@ -269,6 +270,7 @@ autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 autocmd Syntax cpp               call EnhanceSyntax()
+autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 
 "
 " let
@@ -288,14 +290,24 @@ let g:tex_flavor                   = 'latex'
 let g:ackprg                       = "ack-grep -H --nocolor --nogroup --column"
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
-let loaded_tex_syntax_checker      = 1 " stop lacheck, this is just lame!
+let loaded_tex_syntax_checker      = 0 " stop lacheck, this is just lame!
+let omlet_indent_let               = 0
+" let g:pymode_lint                = 0
+" let g:pymode_lint_write            = 0
+" let g:pymode_folding               = 0
+" let g:pymode_syntax                = 0
+" let g:pymode_options               = 0
+" let g:pymode_paths                 = ['D:\xolive\Documents\svn\P2ROTECT\lib\site-packages']
 
 if has("mac")
-    let g:ackprg    = "ack -H --nocolor --nogroup --column"
+    let g:ackprg              = "ack -H --nocolor --nogroup --column"
+    let g:Tex_ViewRule_pdf    = 'Preview'
+    let g:Tex_CompileRule_pdf = 'xelatex'
 endif
 
 if has("win32")
-    let tagbar_ctags_bin = '~/Mes Documents/apps/ctags58/ctags'
+    let g:ackprg    = "D:\\xolive\\Documents\\apps\\ack.bat -H --nocolor --nogroup --column"
+    let tagbar_ctags_bin = 'D:\xolive\Documents\apps\ctags58\ctags'
 endif
 
 " Pathogen call for bundle directory
@@ -324,19 +336,19 @@ endfunction
 
 inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
-let g:tagbar_type_tex = {
-            \ 'ctagstype' : 'latex',
-            \ 'kinds' : [
-            \ 's:sections:1:0',
-            \ 'g:graphics:0:0',
-            \ 'l:labels',
-            \ 'r:refs:1:0',
-            \ 'p:pagerefs:1:0'
-            \ ],
-            \ 'sort' : 0,
-            \ }
+" let g:tagbar_type_tex = {
+"             \ 'ctagstype' : 'latex',
+"             \ 'kinds' : [
+"             \ 's:sections:1:0',
+"             \ 'g:graphics:0:0',
+"             \ 'l:labels',
+"             \ 'r:refs:1:0',
+"             \ 'p:pagerefs:1:0'
+"             \ ],
+"             \ 'sort' : 0,
+"             \ }
 
-set guioptions=F
+set guioptions=a
 
 if has("gui_running")
 "     colorscheme evening
@@ -355,7 +367,9 @@ if has("gui_running")
         vertical resize 81
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
-        set gfn=Menlo\ for\ Powerline:h11
+        set gfn=Menlo\ for\ Powerline:h11:cDEFAULT
+        set gfn=Consolas\ for\ Powerline\ FixedD:h11:cDEFAULT
+"         set gfn=Source\ Code\ Pro\ Light:h11:cDEFAULT
         let g:Powerline_symbols = 'fancy'
         set lines=55
     endif
