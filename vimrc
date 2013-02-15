@@ -134,6 +134,10 @@ map & gqap
 
 let mapleader                      = ','
 let g:mapleader                    = ','
+let g:Tex_ViewRule_pdf             = 'Preview'
+let g:Tex_CompileRule_pdf          = 'xelatex'
+
+let omlet_indent_let = 0
 
 nmap <F2> :TagbarToggle<CR>
 nmap <Leader>b :CtrlPBuffer<CR>
