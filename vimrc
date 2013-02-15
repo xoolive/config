@@ -52,6 +52,7 @@ set backupdir=~/.tmp,.
 set cinoptions=(0,t0,g0,:0,w1,W4
 set clipboard=exclude:.*
 set colorcolumn=81
+set complete+=t
 set completeopt=menu,longest
 " set completeopt=menuone,longest,preview
 " set cursorline                 " highlight current line
@@ -286,12 +287,19 @@ let g:ackprg                       = "ack-grep -H --nocolor --nogroup --column"
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 let loaded_tex_syntax_checker      = 1 " stop lacheck, this is just lame!
+" let g:pymode_lint                  = 0
+let g:pymode_lint_write            = 0
+let g:pymode_folding               = 0
+let g:pymode_syntax                = 0
+let g:pymode_options               = 0
+let g:pymode_paths   = ['D:\xolive\Documents\svn\P2ROTECT\lib\site-packages']
 
 if has("mac")
     let g:ackprg    = "ack -H --nocolor --nogroup --column"
 endif
 
 if has("win32")
+    let g:ackprg    = "D:\\xolive\\Documents\\apps\\ack.bat -H --nocolor --nogroup --column"
     let tagbar_ctags_bin = 'D:\xolive\Documents\apps\ctags58\ctags'
 endif
 
