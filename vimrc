@@ -13,6 +13,7 @@
 "                `filetype plugin indent on` is the only other setup necessary.
 "
 "    Conque-Shell   https://github.com/vim-scripts/Conque-Shell.git
+"    Vim-Clojure    https://github.com/vim-scripts/VimClojure.git
 "    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin.git
 "    ack.vim        https://github.com/mileszs/ack.vim.git
 "    badwolf        https://github.com/sjl/badwolf.git
@@ -20,6 +21,7 @@
 "    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
 "    jedi-vim       https://github.com/davidhalter/jedi-vim
 "    omlet.vim      https://github.com/vim-scripts/omlet.vim.git
+"    python-mode    https://github.com/klen/python-mode.git
 "    syntastic      https://github.com/scrooloose/syntastic.git
 "    tabular        https://github.com/godlygeek/tabular.git
 "    tagbar         https://github.com/majutsushi/tagbar.git
@@ -280,6 +282,7 @@ autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
+autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 
 "
 " let
@@ -292,6 +295,9 @@ let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
+
+let g:pymode_options               = 0
+let g:pymode_paths                 = []
 
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
