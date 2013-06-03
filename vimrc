@@ -328,8 +328,8 @@ elseif has("unix")
 
 elseif has("win32")
 
-    let g:ackprg = "D:\\xolive\\Documents\\apps\\ack.bat -H --nocolor --nogroup --column"
-    let tagbar_ctags_bin = 'D:\xolive\Documents\apps\ctags58\ctags'
+    let g:ackprg = "ack.bat -H --nocolor --nogroup --column"
+    let tagbar_ctags_bin = 'ctags'
 
 endif
 
