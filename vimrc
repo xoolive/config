@@ -80,7 +80,7 @@ set magic                      " use regexp in search
 set matchtime=5                " how many tenths of a second to blink
                                " matching brackets for
 set nocompatible               " no compatibility with legacy vi
-set nostartofline              " do not move to the first char of line
+"set nostartofline              " do not move to the first char of line
 set ruler                      " show the line,column number
 set scrolloff=3                " minimal number of lines around the cursor
 set sessionoptions+=slash,unix
@@ -139,14 +139,10 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>u :Utl<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 
-if has("mac")
+if has("unix")
     nmap <Leader>1 :winsize 81 50<CR>
     nmap <Leader>2 :winsize 121 50<CR>
     nmap <Leader>3 :winsize 161 50<CR>
-elseif has("unix")
-    nmap <Leader>1 :winsize 81 45<CR>
-    nmap <Leader>2 :winsize 121 45<CR>
-    nmap <Leader>3 :winsize 161 45<CR>
 elseif has("win32")
     nmap <Leader>1 :winsize 81 55<CR>
     nmap <Leader>2 :winsize 121 55<CR>
@@ -309,7 +305,10 @@ let loaded_tex_syntax_checker      = 0 " stop lacheck, this is just lame!
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 
+let omlet_indent                   = 2
 let omlet_indent_let               = 0
+let omlet_indent_match             = 0
+let omlet_indent_function          = 0
 
 if has("mac")
 
@@ -343,7 +342,7 @@ if has("gui_running")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
         let g:Powerline_symbols = 'fancy'
-        set lines=45
+        set lines=50
 "         vertical resize 81
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
