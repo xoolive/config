@@ -551,7 +551,8 @@ function s:GetFileTypeSettings(ft)
     elseif fileType =~ '^\(vim\|abel\)$'
 	let b:EnhCommentifyCommentOpen = '"'
 	let b:EnhCommentifyCommentClose = ''
-    elseif fileType =~ '^\(python\|perl\|[^w]*sh$\|tcl\|jproperties\|cmake\|make\|'.
+    elseif fileType =~ '^\(pyrex\|python\|perl\|[^w]*sh$\|tcl\|jproperties\|'.
+		\ 'cmake\|make\|'.
 		\ 'robots\|apacha\|apachestyle\|awk\|bc\|cfg\|cl\|conf\|'.
 		\ 'crontab\|diff\|ecd\|elmfilt\|eterm\|expect\|exports\|'.
 		\ 'fgl\|fvwm\|gdb\|gnuplot\|gtkrc\|hb\|hog\|ia64\|icon\|'.
