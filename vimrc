@@ -11,32 +11,41 @@
 "                ~/.vim/bundle (or ~\vimfiles\bundle), adding
 "                `call pathogen#infect()` to your .vimrc prior to
 "                `filetype plugin indent on` is the only other setup necessary.
-"
-"    Conque-Shell   https://github.com/vim-scripts/Conque-Shell.git
-"    Vim-Clojure    https://github.com/vim-scripts/VimClojure.git
-"    Vim-R-plugin   https://github.com/jcfaria/Vim-R-plugin.git
-"    ack.vim        https://github.com/mileszs/ack.vim.git
-"    badwolf        https://github.com/sjl/badwolf.git
-"    clang-complete https://github.com/Rip-Rip/clang_complete.git
-"    ctrlp.vim      https://github.com/kien/ctrlp.vim.git
-"    jedi-vim       https://github.com/davidhalter/jedi-vim
-"    omlet.vim      https://github.com/vim-scripts/omlet.vim.git
-"    python-mode    https://github.com/klen/python-mode.git
-"    syntastic      https://github.com/scrooloose/syntastic.git
-"    tabular        https://github.com/godlygeek/tabular.git
-"    tagbar         https://github.com/majutsushi/tagbar.git
-"    utl.vim        https://github.com/vim-scripts/utl.vim.git
-"    vim-eunuch     https://github.com/tpope/vim-eunuch.git
-"    vim-fugitive   https://github.com/tpope/vim-fugitive.git
 "    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
-"    vim-powerline  https://github.com/Lokaltog/vim-powerline.git
-"    vim-surrond    https://github.com/tpope/vim-surround.git
 
 
 if has("win32")
     let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
 end
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" required first
+Bundle 'gmarik/vundle'
+
+Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'Rip-Rip/clang_complete.git'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'godlygeek/tabular.git'
+Bundle 'jcfaria/Vim-R-plugin.git'
+Bundle 'kien/ctrlp.vim.git'
+Bundle 'klen/python-mode.git'
+Bundle 'majutsushi/tagbar.git'
+Bundle 'mileszs/ack.vim.git'
+Bundle 'scrooloose/syntastic.git'
+Bundle 'sjl/badwolf.git'
+Bundle 'tpope/vim-eunuch.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'vim-scripts/Conque-Shell.git'
+Bundle 'vim-scripts/VimClojure.git'
+Bundle 'vim-scripts/omlet.vim.git'
+Bundle 'vim-scripts/utl.vim.git'
+
+Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+
+" Bundle 'Valloric/YouCompleteMe'
 
 syntax on                      " syntax hilighting
 filetype off
