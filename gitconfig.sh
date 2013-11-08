@@ -13,3 +13,6 @@ git config --global color.status auto
 git config --global core.editor vim
 git config --global user.email "xavier@xoolive.org"
 git config --global user.name "Xavier Olive"
+
+# how to push (branch)
+git config --global push.default simple
