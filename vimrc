@@ -285,8 +285,8 @@ autocmd BufEnter *               set  shiftwidth=4 tabstop=4
 autocmd BufEnter *.R             set  comments+=b:#'
 autocmd BufEnter *.c,*.cpp,*.h   set  shiftwidth=2 tabstop=2
 autocmd BufEnter *.gamme         set  filetype=gamme
-autocmd BufEnter SCons*,*.scons  set filetype=scons
-autocmd BufEnter *.i             setf cpp
+autocmd BufEnter SCons*,*.scons  set  filetype=scons
+autocmd BufEnter *.i             set  filetype=cpp
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
@@ -318,14 +318,23 @@ let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
+let g:syntastic_cpp_config_file    = '.clang_complete'
+let g:syntastic_tex_checkers       = ['chktex']  " lacheck = big pile of shit
+" Warning 1: Command terminated with space
+" Warning 6: No italic correction (`\/') found
+" Warning 8: Wrong length of dash
+" Warning 11: ... should be \ldots
+let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
+
 let g:syntastic_error_symbol       = '✗'
 let g:syntastic_warning_symbol     = '⚠'
-let g:syntastic_cpp_config_file    = '.clang_complete'
-let loaded_tex_syntax_checker      = 0 " stop lacheck, this is just lame!
 
 
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
+if has("mac")
+    let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+endif
 
 let omlet_indent                   = 2
 let omlet_indent_let               = 0
