@@ -19,3 +19,5 @@ compdef _gnu_generic R
 autoload -U zfinit
 zfinit
 
+# OPAM configuration
+. /Users/xo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
