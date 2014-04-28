@@ -11,7 +11,6 @@
 "                ~/.vim/bundle (or ~\vimfiles\bundle), adding
 "                `call pathogen#infect()` to your .vimrc prior to
 "                `filetype plugin indent on` is the only other setup necessary.
-"    vim-latex      git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex
 
 
 if has("win32")
@@ -24,7 +23,8 @@ call vundle#rc()
 " required first
 Bundle 'gmarik/vundle'
 
-Bundle 'Lokaltog/vim-powerline.git'
+" Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'bling/vim-airline'
 Bundle 'Rip-Rip/clang_complete.git'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'godlygeek/tabular.git'
@@ -43,9 +43,9 @@ Bundle 'vim-scripts/VimClojure.git'
 Bundle 'vim-scripts/omlet.vim.git'
 Bundle 'vim-scripts/utl.vim.git'
 
-Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
-
-" Bundle 'Valloric/YouCompleteMe'
+if has("mac")
+    Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+endif
 
 syntax on                      " syntax hilighting
 filetype off
@@ -329,7 +329,6 @@ let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
 let g:syntastic_error_symbol       = '✗'
 let g:syntastic_warning_symbol     = '⚠'
 
-
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 if has("mac")
@@ -353,10 +352,20 @@ elseif has("unix")
 
 elseif has("win32")
 
-    let g:ackprg = "ack.bat -H --nocolor --nogroup --column"
-    let tagbar_ctags_bin = 'ctags'
+    let g:ackprg              = "ack.bat -H --nocolor --nogroup --column"
+    let tagbar_ctags_bin      = 'ctags'
 
 endif
+
+" let g:airline_powerline_fonts = 1
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+let g:airline_theme='powerlineish'
 
 
 if has("gui_running")
@@ -365,23 +374,17 @@ if has("gui_running")
 
     if has("mac")
         set gfn=Menlo:h12
-"         set gfn=Source\ Code\ Pro\ Light:h13
         set gfn=Menlo\ for\ Powerline:h12
-        let g:Powerline_symbols = 'fancy'
         set lines=50
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
-        let g:Powerline_symbols = 'fancy'
         set lines=50
-"         vertical resize 81
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
-        set gfn=Menlo\ for\ Powerline:h11:cDEFAULT
         set gfn=Consolas\ for\ Powerline\ FixedD:h11:cDEFAULT
-"         set gfn=Source\ Code\ Pro\ Light:h11:cDEFAULT
-        let g:Powerline_symbols = 'fancy'
         set lines=55
     endif
+
 endif
 
