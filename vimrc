@@ -41,6 +41,14 @@ Bundle 'vim-scripts/Conque-Shell.git'
 Bundle 'vim-scripts/VimClojure.git'
 Bundle 'vim-scripts/omlet.vim.git'
 Bundle 'vim-scripts/utl.vim.git'
+" Markdown/Pandoc
+Bundle 'tpope/vim-markdown'
+Bundle 'vim-pandoc/vim-pandoc'
+" For snippets
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
 
 if has("mac")
     Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
@@ -185,8 +193,8 @@ inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
 " play with completion
 inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
 inoremap <C-L> <C-X><C-L>
-inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
-inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
+" inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
+" inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
 
 " remap basic moves
 vnoremap <BS> d
@@ -234,16 +242,16 @@ function! EnhanceSyntax()
 endfunction
 
 " Convenient for #include in c/cpp
-function! SmartInclude()
-    let next = nr2char( getchar( 0 ) )
-    if next == '"'
-        return "#include \".h\"\<Left>\<Left>\<Left>"
-    endif
-    if next == '>'
-        return "#include <>\<Left>"
-    endif
-    return "#include <>\<Left>"
-endfunction
+" function! SmartInclude()
+"     let next = nr2char( getchar( 0 ) )
+"     if next == '"'
+"         return "#include \".h\"\<Left>\<Left>\<Left>"
+"     endif
+"     if next == '>'
+"         return "#include <>\<Left>"
+"     endif
+"     return "#include <>\<Left>"
+" endfunction
 
 " popup
 function! InsertTabWrapper(direction)
