@@ -20,4 +20,6 @@ autoload -U zfinit
 zfinit
 
 # OPAM configuration
-. /Users/xo/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
