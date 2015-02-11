@@ -314,7 +314,8 @@ let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 
 let g:pymode_breakpoint   = 0
-let g:pymode_lint_write   = 1
+let g:pymode_lint_mode    = 0
+let g:pymode_lint_write   = 0
 let g:pymode_folding      = 0
 let g:pymode_options      = 0
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
