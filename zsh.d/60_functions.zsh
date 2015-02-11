@@ -8,5 +8,6 @@ function activate {
 source $HOME/Library/virtualenv/$1/bin/activate
 }
 
+compdef '_files -W $HOME/Library/virtualenv' activate
 
 
