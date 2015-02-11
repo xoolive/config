@@ -56,7 +56,7 @@ PR_BG="%{%(?.$PR_RESET.%S)%}"
 # %R - repository path
 # %S - path in the repository
 FMT_BRANCH="${PR_YELLOW}%b%u%c${PR_RST} " # e.g. master¹²
-FMT_ACTION="(${PR_CYAN}%a${PR_RST}%)"   # e.g. (rebase-i)
+FMT_ACTION="(${PR_CYAN}%a${PR_RST}%) "   # e.g. (rebase-i)
 # FMT_PATH="%R${PR_YELLOW}/%S"              # e.g. ~/repo/subdir
 
 # check-for-changes can be really slow.

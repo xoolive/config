@@ -116,6 +116,8 @@ set tabstop=4                  " what is a tab?
 set tags=tags;/                " upward search, up to the root directory
 set textwidth=80               " no more than 80 char per line
 set viminfo='20,\"50
+" allow moving cursor past end of line in visual block mode
+set virtualedit+=block
 set whichwrap=<,>,[,],h,l
 set wildmode=list:full         " show list and try to complete
 
@@ -175,6 +177,11 @@ nnoremap <Leader>V V`]
 
 " sort css
 " nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+
+nnoremap * *zzzv
+nnoremap # #zzzv
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 " can't work anymore without those
 nmap <S-Tab> :bp<CR>
@@ -254,16 +261,16 @@ endfunction
 " endfunction
 
 " popup
-function! InsertTabWrapper(direction)
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    elseif "backward" == a:direction
-        return "\<c-p>"
-    else
-        return "\<c-n>"
-    endif
-endfunction
+" function! InsertTabWrapper(direction)
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     elseif "backward" == a:direction
+"         return "\<c-p>"
+"     else
+"         return "\<c-n>"
+"     endif
+" endfunction
 
 " Tabularize related
 function! s:align()
@@ -297,6 +304,8 @@ autocmd BufEnter *.i             set  filetype=cpp
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
+autocmd InsertLeave *            set nocursorline
+autocmd InsertEnter *            set cursorline
 autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
@@ -314,13 +323,13 @@ let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 
 let g:pymode_breakpoint   = 0
-let g:pymode_lint_mode    = 0
+let g:pymode_lint         = 0
 let g:pymode_lint_write   = 0
 let g:pymode_folding      = 0
 let g:pymode_options      = 0
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
+let g:pymode_lint_ignore  = "E501, C0103"
 
-" let g:pymode_lint_ignore                    = "E501"
 " let g:pymode_rope_always_show_complete_menu = 1
 
 let g:tex_flavor                   = 'latex'
@@ -357,6 +366,7 @@ if has("mac")
 elseif has("unix")
 
     let g:ackprg              = "ack-grep -H --nocolor --nogroup --column"
+    let g:Tex_CompileRule_pdf = 'xelatex'
 
 elseif has("win32")
 
