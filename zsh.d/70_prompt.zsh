@@ -23,6 +23,19 @@ colors
 autoload -Uz vcs_info
 
 
+# For pretty print of virtualenv
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+
+function virtenv_indicator {
+    if [[ -z $VIRTUAL_ENV ]] then
+        psvar[1]=''
+    else
+        psvar[1]=${VIRTUAL_ENV##*/}
+    fi
+}
+add-zsh-hook precmd virtenv_indicator
+
+
 # -------------------------------
 # # define core prompt functions
 #
@@ -54,18 +67,6 @@ zstyle ':vcs_info:*:prompt:*' stagedstr     '+'
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   "" "%~"
-
-# For pretty print of virtualenv
-export VIRTUAL_ENV_DISABLE_PROMPT=yes
-
-function virtenv_indicator {
-    if [[ -z $VIRTUAL_ENV ]] then
-        psvar[1]=''
-    else
-        psvar[1]=${VIRTUAL_ENV##*/}
-    fi
-}
-add-zsh-hook precmd virtenv_indicator
 
 function lprompt {
     local brackets=$1
@@ -127,7 +128,7 @@ fi
 
 # This variable dictates weather we are going to do the git prompt update
 # before printing the next prompt.  On some setups this saves 10s of work.
-PR_GIT_UPDATE=1
+export PR_GIT_UPDATE=1
 
 # called before command excution
 # here we decide if we should update the prompt next time
@@ -138,14 +139,14 @@ function zsh_git_prompt_preexec {
                 ;;
         esac
 }
-preexec_functions+='zsh_git_prompt_preexec'
+add-zsh-hook preexec zsh_git_prompt_preexec
 
 # called after directory change
 # we just assume that we have to update git prompt
 function zsh_git_prompt_chpwd {
         PR_GIT_UPDATE=1
 }
-chpwd_functions+='zsh_git_prompt_chpwd'
+add-zsh-hook chpwd zsh_git_prompt_chpwd
 
 # called before prompt generation
 # if needed, we will update the prompt info
@@ -155,7 +156,7 @@ function zsh_git_prompt_precmd {
                PR_GIT_UPDATE=
        fi
 }
-precmd_functions+='zsh_git_prompt_precmd'
+add-zsh-hook precmd zsh_git_prompt_precmd
 
 # ------------------------------
 # handle vi NORMAL/INSERT mode change
@@ -181,8 +182,8 @@ case $TERM in
                 local x="${${${1//\"/\\\"}//\$/\\\\\$}//\%/%%}"
                 print -Pn "\e]0;%n@%m: %~  $x\a"
         }
-        preexec_functions+='zsh_term_prompt_preexec'
-        precmd_functions+='zsh_term_prompt_precmd'
+        add-zsh-hook preexec zsh_term_prompt_preexec
+        add-zsh-hook precmd zsh_term_prompt_precmd
         ;;
     screen*)
         function zsh_term_prompt_precmd {
@@ -196,8 +197,8 @@ case $TERM in
 
                 print -nR $'\033]0;'"$x"$'\a'
         }
-        preexec_functions+='zsh_term_prompt_preexec'
-        precmd_functions+='zsh_term_prompt_precmd'
+        add-zsh-hook preexec zsh_term_prompt_preexec
+        add-zsh-hook precmd zsh_term_prompt_precmd
         ;;
 esac
 
