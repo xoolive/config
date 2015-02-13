@@ -125,7 +125,7 @@ set wildmode=list:full         " show list and try to complete
 " iabbrev
 "
 
-iabbrev #i <C-R>=SmartInclude()<CR>
+" iabbrev #i <C-R>=SmartInclude()<CR>
 iabbrev #d #define
 iabbrev \i \item
 
@@ -350,6 +350,8 @@ let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 if has("mac")
     let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+elseif has("unix")
+    let g:clang_library_path = '/usr/lib/llvm-3.4/lib'
 endif
 
 let omlet_indent                   = 2
