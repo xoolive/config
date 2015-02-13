@@ -328,8 +328,8 @@ let g:pymode_lint_write   = 0
 let g:pymode_folding      = 0
 let g:pymode_options      = 0
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
+let g:pymode_lint_ignore  = "E501, C0103"
 
-let g:pymode_lint_ignore                    = "E501, C0103"
 " let g:pymode_rope_always_show_complete_menu = 1
 
 let g:tex_flavor                   = 'latex'

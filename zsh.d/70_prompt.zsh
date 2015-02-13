@@ -15,10 +15,25 @@
 
 
 setopt prompt_subst
+
+autoload add-zsh-hook
 autoload colors
 colors
 
 autoload -Uz vcs_info
+
+
+# For pretty print of virtualenv
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+
+function virtenv_indicator {
+    if [[ -z $VIRTUAL_ENV ]] then
+        psvar[1]=''
+    else
+        psvar[1]=${VIRTUAL_ENV##*/}
+    fi
+}
+add-zsh-hook precmd virtenv_indicator
 
 
 # -------------------------------
@@ -40,17 +55,17 @@ PR_BG="%{%(?.$PR_RESET.%S)%}"
 # %a - action (e.g. rebase-i)
 # %R - repository path
 # %S - path in the repository
-FMT_BRANCH=" ${PR_BRIGHT_GREEN}%b%u%c %S ${PR_RST}" # e.g. master¹²
-FMT_ACTION="(${PR_CYAN}%a${PR_RST}%)"   # e.g. (rebase-i)
-FMT_PATH="%R${PR_YELLOW}/%S"              # e.g. ~/repo/subdir
+FMT_BRANCH="${PR_YELLOW}%b%u%c${PR_RST} " # e.g. master¹²
+FMT_ACTION="(${PR_CYAN}%a${PR_RST}%) "   # e.g. (rebase-i)
+# FMT_PATH="%R${PR_YELLOW}/%S"              # e.g. ~/repo/subdir
 
 # check-for-changes can be really slow.
 # you should disable it, if you work with large repositories
 zstyle ':vcs_info:*:prompt:*' check-for-changes true
 zstyle ':vcs_info:*:prompt:*' unstagedstr   '?'
 zstyle ':vcs_info:*:prompt:*' stagedstr     '+'
-zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}" "${FMT_PATH}"
-zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}" "${FMT_PATH}"
+zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
+zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   "" "%~"
 
 function lprompt {
@@ -71,7 +86,7 @@ function lprompt {
     local vicol='${PR_VICOLOR}'
 
     PROMPT="${bracket_open}${userhost}${cwd}${bracket_close}
-${git}${vicol}${vimode}${PR_RESET} "
+${color1}%(1V.(%1v) .)${git}${vicol}${vimode}${PR_RESET} "
 
 }
 
@@ -103,37 +118,20 @@ if [ $UID -eq 0 ]; then
     rprompt '<>' $PR_RED $PR_RED
 else
     case $HOST in
-        Summertime*)
-            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
-            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
-            ;;
-        tsugaru)
-            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
-            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
-            ;;
-        centurion)
-            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
-            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
-            ;;
-        iesta*)
-            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
-            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
-            ;;
         *)
-            lprompt '{}' $PR_WHITE $PR_WHITE $PR_WHITE
-            rprompt '()' $PR_WHITE $PR_WHITE
+            lprompt '' $PR_BRIGHT_GREEN $PR_BRIGHT_RED $PR_BRIGHT_MAGENTA
+            rprompt '[]' $PR_GREEN $PR_BRIGHT_GREEN
             ;;
     esac
 fi
 
 
+# This variable dictates weather we are going to do the git prompt update
+# before printing the next prompt.  On some setups this saves 10s of work.
+export PR_GIT_UPDATE=1
 
-# ------------------------------
-# update the vcs_info_msg_ magic variables, but only as little as possible
-
-PR_GIT_UPDATE=1
-
-# if we do some things on the git
+# called before command excution
+# here we decide if we should update the prompt next time
 function zsh_git_prompt_preexec {
         case "$(history $HISTCMD)" in
             *git*)
@@ -141,25 +139,24 @@ function zsh_git_prompt_preexec {
                 ;;
         esac
 }
-preexec_functions+='zsh_git_prompt_preexec'
+add-zsh-hook preexec zsh_git_prompt_preexec
 
 # called after directory change
+# we just assume that we have to update git prompt
 function zsh_git_prompt_chpwd {
         PR_GIT_UPDATE=1
 }
-chpwd_functions+='zsh_git_prompt_chpwd'
-
-# Trick otherwise chpwd_functions
-chpwd_functions=(${chpwd_functions[@]})
+add-zsh-hook chpwd zsh_git_prompt_chpwd
 
 # called before prompt generation
+# if needed, we will update the prompt info
 function zsh_git_prompt_precmd {
        if [[ -n "$PR_GIT_UPDATE" ]] ; then
                vcs_info 'prompt'
                PR_GIT_UPDATE=
        fi
 }
-precmd_functions+='zsh_git_prompt_precmd'
+add-zsh-hook precmd zsh_git_prompt_precmd
 
 # ------------------------------
 # handle vi NORMAL/INSERT mode change
@@ -185,10 +182,10 @@ case $TERM in
                 local x="${${${1//\"/\\\"}//\$/\\\\\$}//\%/%%}"
                 print -Pn "\e]0;%n@%m: %~  $x\a"
         }
-        preexec_functions+='zsh_term_prompt_preexec'
-        precmd_functions+='zsh_term_prompt_precmd'
+        add-zsh-hook preexec zsh_term_prompt_preexec
+        add-zsh-hook precmd zsh_term_prompt_precmd
         ;;
-screen*)
+    screen*)
         function zsh_term_prompt_precmd {
                 print -nR $'\033k'"zsh"$'\033'\\\
 
@@ -200,8 +197,8 @@ screen*)
 
                 print -nR $'\033]0;'"$x"$'\a'
         }
-        preexec_functions+='zsh_term_prompt_preexec'
-        precmd_functions+='zsh_term_prompt_precmd'
+        add-zsh-hook preexec zsh_term_prompt_preexec
+        add-zsh-hook precmd zsh_term_prompt_precmd
         ;;
 esac
 
