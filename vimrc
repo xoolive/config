@@ -30,7 +30,6 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'godlygeek/tabular.git'
 Bundle 'jcfaria/Vim-R-plugin.git'
 Bundle 'kien/ctrlp.vim.git'
-Bundle 'klen/python-mode.git'
 Bundle 'majutsushi/tagbar.git'
 Bundle 'mileszs/ack.vim.git'
 Bundle 'scrooloose/syntastic.git'
@@ -39,8 +38,12 @@ Bundle 'tpope/vim-fugitive.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'vim-scripts/Conque-Shell.git'
 Bundle 'vim-scripts/VimClojure.git'
-Bundle 'vim-scripts/omlet.vim.git'
 Bundle 'vim-scripts/utl.vim.git'
+" For OCaml
+Bundle 'vim-scripts/omlet.vim.git'
+" For coq
+Bundle "jvoorhis/coq.vim"
+Bundle "xoolive/CoqIDE"
 " Markdown/Pandoc
 Bundle 'tpope/vim-markdown'
 Bundle 'vim-pandoc/vim-pandoc'
@@ -52,6 +55,8 @@ Bundle "honza/vim-snippets"
 
 if has("mac")
     Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+else
+    Bundle "xoolive/vim-latex"
 endif
 
 syntax on                      " syntax hilighting
@@ -317,20 +322,12 @@ autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
 
+let g:CoqIDEDefaultMap = 1
+
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
-
-let g:pymode_breakpoint   = 0
-let g:pymode_lint         = 0
-let g:pymode_lint_write   = 0
-let g:pymode_folding      = 0
-let g:pymode_options      = 0
-let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
-let g:pymode_lint_ignore  = "E501, C0103"
-
-" let g:pymode_rope_always_show_complete_menu = 1
 
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
