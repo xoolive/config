@@ -1,6 +1,6 @@
 # alias
-git config --global alias.gl "log -12 --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(by %an)%Creset%C(yellow bold)%d%Creset%n'"
-git config --global alias.ll "log -18 --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'"
+git config --global alias.lol "log --pretty=oneline --abbrev-commit --graph --decorate"
+git config --global alias.los "log --pretty=oneline --abbrev-commit -10 --decorate"
 git config --global alias.root "rev-parse --show-toplevel"
 git config --global alias.up '!git remote update -p; git merge --ff-only @{u}'
 

@@ -4,10 +4,19 @@ gpg –armor –export $1 | sudo apt-key add -
 }
 
 function activate {
-# Play with uname -s
-source $HOME/Library/virtualenv/$1/bin/activate
+if [[ -z $1 ]]; then
+    echo "Usage: activate [virtualenv name]"
+    return
+fi
+if [[ `uname -s` -eq "Darwin" ]]; then
+    source $HOME/Library/virtualenv/$1/bin/activate
+fi
 }
 
-compdef '_files -W $HOME/Library/virtualenv' activate
+if [[ `uname -s` -eq "Darwin" ]]; then
+    compdef '_files -W $HOME/Library/virtualenv' activate
+fi
 
+# I like it!
+autoload -U zmv
 
