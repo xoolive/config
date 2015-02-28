@@ -27,10 +27,17 @@ autoload -Uz vcs_info
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
 
 function virtenv_indicator {
+# First for Python
     if [[ -z $VIRTUAL_ENV ]] then
         psvar[1]=''
     else
         psvar[1]=${VIRTUAL_ENV##*/}
+    fi
+# Then for OCaml
+    if [[ -z $OPAMROOT ]] then
+        psvar[2]=''
+    else
+        psvar[2]=${OPAMROOT##*/}
     fi
 }
 add-zsh-hook precmd virtenv_indicator
@@ -86,7 +93,7 @@ function lprompt {
     local vicol='${PR_VICOLOR}'
 
     PROMPT="${bracket_open}${userhost}${cwd}${bracket_close}
-${color1}%(1V.(%1v) .)${git}${vicol}${vimode}${PR_RESET} "
+${color1}%(1V.(%1v) .)${color3}%(2V.(%2v) .)${git}${vicol}${vimode}${PR_RESET} "
 
 }
 

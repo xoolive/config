@@ -1,9 +1,5 @@
 autoload -U compinit zrecompile
 
-if [ -f .zshenv ]; then
-    source .zshenv
-fi
-
 if [ -f /etc/zsh_command_not_found ]; then
     source /etc/zsh_command_not_found
 fi
