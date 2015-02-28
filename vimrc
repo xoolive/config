@@ -437,5 +437,9 @@ if has("gui_running")
         set lines=55
     endif
 
+else
+    colorscheme koehler
+    let g:airline_theme="lucius"
+
 endif
 
