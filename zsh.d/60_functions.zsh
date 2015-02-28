@@ -25,6 +25,17 @@ if [[ `uname -s` -eq "Darwin" ]]; then
     compdef '_files -W envdirs' activate
 fi
 
+function vman {
+if [[ `uname -s` -eq "Darwin" ]]; then
+    mvim -c "SuperMan $*"
+else
+    gvim -c "SuperMan $*"
+fi
+if [ "$?" != "0" ]; then
+    echo "No manual entry for $*"
+fi
+}
+
 # I like it!
 autoload -U zmv
 

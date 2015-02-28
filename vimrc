@@ -23,30 +23,73 @@ call vundle#rc()
 " required first
 Bundle 'gmarik/vundle'
 
-" Bundle 'Lokaltog/vim-powerline.git'
+" Look and feel
 Bundle 'bling/vim-airline'
-Bundle 'Rip-Rip/clang_complete.git'
-Bundle 'davidhalter/jedi-vim'
+Bundle 'altercation/vim-colors-solarized'
+
+" CSV-like alignment
 Bundle 'godlygeek/tabular.git'
-Bundle 'jcfaria/Vim-R-plugin.git'
+
+" Parse through files/directories/buffers
 Bundle 'kien/ctrlp.vim.git'
-Bundle 'majutsushi/tagbar.git'
+
+" Support for ack
 Bundle 'mileszs/ack.vim.git'
+
+" Add the tagbar (need for exuberant-ctags)
+Bundle 'majutsushi/tagbar.git'
+
+" Syntax checker
 Bundle 'scrooloose/syntastic.git'
+"
+" Access to Remove, Rename, Mkdir, etc.
 Bundle 'tpope/vim-eunuch.git'
-Bundle 'tpope/vim-fugitive.git'
+
+" Add support to s in csb[, etc.
 Bundle 'tpope/vim-surround.git'
-Bundle 'vim-scripts/Conque-Shell.git'
-Bundle 'vim-scripts/VimClojure.git'
+
+" Working with git
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'airblade/vim-gitgutter'
+
+" URL
 Bundle 'vim-scripts/utl.vim.git'
-" For OCaml
+
+" Fun for use with man
+" Add the following to your .zshrc
+" function vman {
+"     vim -c "SuperMan $*"
+"     if [ "$?" != "0" ]; then
+"       echo "No manual entry for $*"
+"     fi
+" }
+Bundle 'jez/vim-superman'
+
+" Convenient for C/C++
+Bundle 'vim-scripts/a.vim'
+Bundle 'Rip-Rip/clang_complete.git'
+
+" Working with Python
+Bundle 'davidhalter/jedi-vim'
+
+" Working with Clojure
+Bundle 'vim-scripts/VimClojure.git'
+
+" Working with R
+Bundle 'vim-scripts/Conque-Shell.git'
+Bundle 'jcfaria/Vim-R-plugin.git'
+
+" Working with OCaml
 Bundle 'vim-scripts/omlet.vim.git'
-" For coq
+
+" Working with coq
 Bundle "jvoorhis/coq.vim"
 Bundle "xoolive/CoqIDE"
-" Markdown/Pandoc
+
+" Working with Markdown/Pandoc
 Bundle 'tpope/vim-markdown'
 Bundle 'vim-pandoc/vim-pandoc'
+
 " For snippets
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -144,6 +187,7 @@ let g:mapleader               = ','
 " map
 "
 
+" Realign paragraph
 map & gqap
 
 " Calling accidentally help is so annoying!!
@@ -151,28 +195,39 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 nmap <F2> :TagbarToggle<CR>
-nmap <Leader>b :CtrlPBuffer<CR>
+
+nmap <C-B> :CtrlPBuffer<CR>
+nmap <C-H> :CtrlPMRUFiles<CR>
+
 nmap <Leader>d :DiffSaved<CR>
 nmap <Leader>D :DiffSVN<CR>
+
 nmap <Leader>e :Errors<CR>
 nmap <Leader>h :nohl<CR>
-nmap <Leader>l :resize 60<CR>
-nmap <Leader>N :Nl<CR>
-nmap <Leader>n :RNl<CR>
-nmap <Leader>r :vertical resize 81<CR>
-nmap <Leader>s :source $MYVIMRC<CR>
+
+nmap <Leader>n :Nl<CR>
+nmap <Leader>N :RNl<CR>
+
 nmap <Leader>u :Utl<CR>
+
+nmap <Leader>l :resize 60<CR>
+nmap <Leader>r :vertical resize 83<CR>
+
+nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 
 if has("unix")
-    nmap <Leader>1 :winsize 81 50<CR>
-    nmap <Leader>2 :winsize 121 50<CR>
-    nmap <Leader>3 :winsize 161 50<CR>
+    nmap <Leader>1 :winsize 83 50<CR>
+    nmap <Leader>2 :winsize 123 50<CR>
+    nmap <Leader>3 :winsize 163 50<CR>
 elseif has("win32")
-    nmap <Leader>1 :winsize 81 55<CR>
-    nmap <Leader>2 :winsize 121 55<CR>
-    nmap <Leader>3 :winsize 161 55<CR>
+    nmap <Leader>1 :winsize 83 55<CR>
+    nmap <Leader>2 :winsize 123 55<CR>
+    nmap <Leader>3 :winsize 163 55<CR>
 endif
+
+" Follow links with Superman!
+noremap K :SuperMan <cword><CR>
 
 " remove trailing spaces
 nnoremap <Leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -183,6 +238,7 @@ nnoremap <Leader>V V`]
 " sort css
 " nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
+" Place next match in the middle of the scren
 nnoremap * *zzzv
 nnoremap # #zzzv
 nnoremap n nzzzv
@@ -200,13 +256,9 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a_ :Tabularize /<-<CR>
 vmap <Leader>a_ :Tabularize /<-<CR>
 
-inoremap <silent><Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
 " play with completion
 inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
 inoremap <C-L> <C-X><C-L>
-" inoremap <S-Tab> <C-R>=InsertTabWrapper("forward")<cr>
-" inoremap <Tab> <C-R>=InsertTabWrapper("backward")<cr>
 
 " remap basic moves
 vnoremap <BS> d
@@ -253,30 +305,6 @@ function! EnhanceSyntax()
     hi def link cppFuncDef Special
 endfunction
 
-" Convenient for #include in c/cpp
-" function! SmartInclude()
-"     let next = nr2char( getchar( 0 ) )
-"     if next == '"'
-"         return "#include \".h\"\<Left>\<Left>\<Left>"
-"     endif
-"     if next == '>'
-"         return "#include <>\<Left>"
-"     endif
-"     return "#include <>\<Left>"
-" endfunction
-
-" popup
-" function! InsertTabWrapper(direction)
-"     let col = col('.') - 1
-"     if !col || getline('.')[col - 1] !~ '\k'
-"         return "\<tab>"
-"     elseif "backward" == a:direction
-"         return "\<c-p>"
-"     else
-"         return "\<c-n>"
-"     endif
-" endfunction
-
 " Tabularize related
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
@@ -297,7 +325,7 @@ command! Nl if (&nu) <Bar> set nonu <Bar> else <Bar> set nu <Bar> endif
 command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
 
 " Jump to last position in the file, see <url:vimhelp:last-position-jump>
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \ | exe "normal g`\"" | endif
 
 autocmd BufEnter *               set  shiftwidth=4 tabstop=4
@@ -308,9 +336,12 @@ autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
+
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
+
 autocmd InsertLeave *            set nocursorline
 autocmd InsertEnter *            set cursorline
+
 autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
@@ -318,6 +349,8 @@ autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 "
 " let
 "
+
+let g:airline#extensions#hunks#non_zero_only = 1
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
