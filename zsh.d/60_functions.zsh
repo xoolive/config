@@ -8,7 +8,7 @@ if [[ -z $1 ]]; then
     echo "Usage: activate [virtualenv/opamroot name]"
     return
 fi
-if [[ `uname -s` -eq "Darwin" ]]; then
+if [[ `uname -s` = "Darwin" ]]; then
     if [[ -d $HOME/Library/virtualenv/$1 ]]; then
         source $HOME/Library/virtualenv/$1/bin/activate
     elif [[ -d $HOME/Library/opam/$1 ]]; then
@@ -17,11 +17,26 @@ if [[ `uname -s` -eq "Darwin" ]]; then
         echo "$1 not found"
     fi
 fi
+if [[ `uname -s` = "Linux" ]]; then
+    if [[ -d $HOME/.virtualenv/$1 ]]; then
+        source $HOME/.virtualenv/$1/bin/activate
+    elif [[ -d $HOME/.opamenv/$1 ]]; then
+        eval `opam config env --root=$HOME/.opamenv/$1`
+    else
+        echo "$1 not found"
+    fi
+fi
 }
 
-if [[ `uname -s` -eq "Darwin" ]]; then
+if [[ `uname -s` = "Darwin" ]]; then
     local envdirs
     envdirs=($HOME/Library/virtualenv $HOME/Library/opam)
+    compdef '_files -W envdirs' activate
+fi
+
+if [[ `uname -s` = "Linux" ]]; then
+    local envdirs
+    envdirs=($HOME/.virtualenv $HOME/.opamenv)
     compdef '_files -W envdirs' activate
 fi
 
