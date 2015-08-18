@@ -89,6 +89,7 @@ Bundle "xoolive/CoqIDE"
 " Working with Markdown/Pandoc
 Bundle 'tpope/vim-markdown'
 Bundle 'vim-pandoc/vim-pandoc'
+Bundle 'vim-pandoc/vim-pandoc-syntax'
 
 " For snippets
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -141,7 +142,7 @@ set laststatus=2               " always show the status bar
 set linespace=1                " set the space between two lines (gui only)
 set list                       " we do what to show tabs, to ensure we get them
                                " out of my files
-set listchars=tab:▸-,trail:-,eol:¬,extends:❯,precedes:❮ " show tabs and trailing
+set listchars=nbsp:¤,tab:▸-,trail:-,eol:¬,extends:❯,precedes:❮ " show tabs and trailing
 set magic                      " use regexp in search
 set matchtime=5                " how many tenths of a second to blink
                                " matching brackets for
@@ -195,6 +196,7 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 nmap <F2> :TagbarToggle<CR>
+nmap <F5> :exec '!'.getline('.')<CR>
 
 nmap <C-B> :CtrlPBuffer<CR>
 nmap <C-H> :CtrlPMRUFiles<CR>
@@ -275,6 +277,8 @@ vnoremap <Up> k
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Highlight characters over column 85
 match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
+au BufEnter *.md match MoreMsg '\(porcupine\)'
+au BufLeave *.md match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
 "
 " function
@@ -362,6 +366,10 @@ let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#filetypes#pandoc_markdown = 0
+let g:pandoc#modules#disabled = ["folding"]
+
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
@@ -379,7 +387,7 @@ let g:syntastic_warning_symbol     = '⚠'
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 if has("mac")
-    let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/'
+    let g:clang_library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
 elseif has("unix")
     let g:clang_library_path = '/usr/lib/llvm-3.4/lib'
 endif
@@ -394,6 +402,7 @@ if has("mac")
     let g:ackprg              = "ack -H --nocolor --nogroup --column"
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
+    let CoqIDE_coqtop = "/Users/xo/Library/opam/coq/system/bin/coqtop.opt"
 
 elseif has("unix")
 
