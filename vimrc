@@ -355,7 +355,7 @@ let g:airline#extensions#hunks#non_zero_only = 1
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
 
-let g:CoqIDEDefaultMap = 1
+let g:CoqIDEDefaultMap             = 1
 
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
