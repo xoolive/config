@@ -349,6 +349,7 @@ autocmd InsertEnter *            set cursorline
 autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
+autocmd Syntax gitcommit         set textwidth=72
 
 "
 " let
