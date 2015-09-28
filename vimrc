@@ -41,12 +41,14 @@ Bundle 'majutsushi/tagbar.git'
 
 " Syntax checker
 Bundle 'scrooloose/syntastic.git'
-"
+
 " Access to Remove, Rename, Mkdir, etc.
 Bundle 'tpope/vim-eunuch.git'
 
 " Add support to s in csb[, etc.
 Bundle 'tpope/vim-surround.git'
+" I need to repeat those!
+Bundle 'tpope/vim-repeat.git'
 
 " Working with git
 Bundle 'tpope/vim-fugitive.git'
@@ -83,24 +85,27 @@ Bundle 'jcfaria/Vim-R-plugin.git'
 Bundle 'vim-scripts/omlet.vim.git'
 
 " Working with coq
-Bundle "jvoorhis/coq.vim"
-Bundle "xoolive/CoqIDE"
+Bundle 'jvoorhis/coq.vim'
+Bundle 'xoolive/CoqIDE'
 
 " Working with Markdown/Pandoc
-Bundle 'tpope/vim-markdown'
 Bundle 'vim-pandoc/vim-pandoc'
 Bundle 'vim-pandoc/vim-pandoc-syntax'
+Bundle 'reedes/vim-pencil'
 
 " For snippets
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+
+" Distraction-free writing
+Bundle 'junegunn/goyo.vim'
 
 if has("mac")
     Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 else
-    Bundle "xoolive/vim-latex"
+    Bundle 'xoolive/vim-latex'
 endif
 
 syntax on                      " syntax hilighting
@@ -277,6 +282,10 @@ vnoremap <Up> k
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Highlight characters over column 85
 match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
+
+" syntax match DoubleSpace /  \+/
+" highlight link DoubleSpace MoreMsg
+
 au BufEnter *.md match MoreMsg '\(porcupine\)'
 au BufLeave *.md match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
@@ -350,6 +359,8 @@ autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 autocmd Syntax gitcommit         set textwidth=72
+
+autocmd BufNewFile,BufReadPost *.md set filetype=pandoc
 
 "
 " let
@@ -426,12 +437,11 @@ let g:airline_symbols = {}
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
-let g:airline_theme='powerlineish'
-
 
 if has("gui_running")
 
     colorscheme molokai
+    let g:airline_theme='powerlineish'
 
     if has("mac")
         set gfn=Menlo:h12
