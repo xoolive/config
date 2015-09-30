@@ -85,8 +85,8 @@ Bundle 'jcfaria/Vim-R-plugin.git'
 Bundle 'vim-scripts/omlet.vim.git'
 
 " Working with coq
-Bundle 'jvoorhis/coq.vim'
-Bundle 'xoolive/CoqIDE'
+" Bundle 'jvoorhis/coq.vim'
+" Bundle 'xoolive/CoqIDE'
 
 " Working with Markdown/Pandoc
 Bundle 'vim-pandoc/vim-pandoc'
@@ -371,7 +371,7 @@ let g:airline#extensions#hunks#non_zero_only = 1
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
 
-let g:CoqIDEDefaultMap             = 1
+" let g:CoqIDEDefaultMap             = 1
 
 let g:EnhCommentifyFirstLineMode   = "yes"
 let g:EnhCommentifyPretty          = "yes"
@@ -414,7 +414,7 @@ if has("mac")
     let g:ackprg              = "ack -H --nocolor --nogroup --column"
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
-    let CoqIDE_coqtop = "/Users/xo/Library/opam/coq/system/bin/coqtop.opt"
+"     let CoqIDE_coqtop = "/Users/xo/Library/opam/coq/system/bin/coqtop.opt"
 
 elseif has("unix")
 
