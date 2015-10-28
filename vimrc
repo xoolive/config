@@ -343,7 +343,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 
 autocmd BufEnter *               set  shiftwidth=4 tabstop=4
 autocmd BufEnter *.R             set  comments+=b:#'
-autocmd BufEnter *.c,*.cpp,*.h   set  shiftwidth=2 tabstop=2
+autocmd BufEnter *.c,*.cpp,*.h,*.hpp set  shiftwidth=2 tabstop=2
 autocmd BufEnter *.gamme         set  filetype=gamme
 autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
