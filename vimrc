@@ -131,6 +131,7 @@ set complete+=t
 set completeopt=menu,longest
 " set cursorline                 " highlight current line
 set dictionary+=/usr/share/dict/words
+set diffopt+=vertical
 set directory=~/.tmp,.,/tmp
 set display=lastline           " open the file where we last closed it
 set encoding=utf8
@@ -283,8 +284,8 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Highlight characters over column 85
 match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
-" syntax match DoubleSpace /  \+/
-" highlight link DoubleSpace MoreMsg
+syntax match DoubleSpace /  \+/
+highlight link DoubleSpace MoreMsg
 
 au BufEnter *.md match MoreMsg '\(porcupine\)'
 au BufLeave *.md match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
