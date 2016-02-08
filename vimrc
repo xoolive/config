@@ -103,7 +103,8 @@ Bundle 'honza/vim-snippets'
 Bundle 'junegunn/goyo.vim'
 
 if has("mac")
-    Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
+    Bundle 'http://git.code.sf.net/p/vim-latex/vim-latex'
+"     Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 else
     Bundle 'xoolive/vim-latex'
 endif
@@ -215,6 +216,8 @@ nmap <Leader>h :nohl<CR>
 
 nmap <Leader>n :Nl<CR>
 nmap <Leader>N :RNl<CR>
+
+nmap <Leader>o :call OldPunc()<CR>
 
 nmap <Leader>u :Utl<CR>
 
@@ -329,6 +332,10 @@ function! s:align()
     normal! 0
     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
   endif
+endfunction
+
+function! OldPunc()
+    %call setline(".", tr(getline("."),"’“”","'\"\""))
 endfunction
 
 "
