@@ -1,5 +1,5 @@
 setopt ALL_EXPORT             # Comme ca, c'est fait !
-setopt APPEND_HISTORY         # Partage l'historique
+setopt incappendhistory       # appendhistory, incappendhistory, sharehistory
 setopt auto_pushd             # "cd" met le répertoire d'où on vient sur la pile
 setopt auto_remove_slash      # Enleve les / inutiles en completion
 setopt chase_links            # Traite les liens symboliques comme il faut
