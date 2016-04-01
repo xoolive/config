@@ -118,6 +118,7 @@ filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
 
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+let $PATH .= ':' . substitute(system('opam config var bin'),'\n$','','''')
 
 execute "set rtp+=" . g:opamshare . "/ocp-indent/vim"
 execute "set rtp+=" . g:opamshare . "/ocp-build/vim"
