@@ -121,7 +121,6 @@ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 let $PATH .= ':' . substitute(system('opam config var bin'),'\n$','','''')
 
 execute "set rtp+=" . g:opamshare . "/ocp-indent/vim"
-execute "set rtp+=" . g:opamshare . "/ocp-build/vim"
 
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 execute "helptags " . g:opamshare . "/merlin/vim/doc"
@@ -275,10 +274,6 @@ nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a_ :Tabularize /<-<CR>
 vmap <Leader>a_ :Tabularize /<-<CR>
-
-" play with completion
-inoremap <C-Space> <C-R>=TriggerSnippet()<cr>
-inoremap <C-L> <C-X><C-L>
 
 " remap basic moves
 vnoremap <BS> d
