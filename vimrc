@@ -1,4 +1,5 @@
 " Configuration file for vim
+
 "
 " When a reference is made to a tip #<tip> then you can access the reference at
 " the following url:
@@ -24,7 +25,8 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Look and feel
-Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 Bundle 'altercation/vim-colors-solarized'
 
 " CSV-like alignment
@@ -82,7 +84,7 @@ Bundle 'vim-scripts/Conque-Shell.git'
 Bundle 'jcfaria/Vim-R-plugin.git'
 
 " Working with OCaml
-Bundle 'vim-scripts/omlet.vim.git'
+" Bundle 'vim-scripts/omlet.vim.git'
 
 " Working with coq
 " Bundle 'jvoorhis/coq.vim'
@@ -104,7 +106,6 @@ Bundle 'junegunn/goyo.vim'
 
 if has("mac")
     Bundle 'http://git.code.sf.net/p/vim-latex/vim-latex'
-"     Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
 else
     Bundle 'xoolive/vim-latex'
 endif
@@ -116,6 +117,13 @@ call pathogen#helptags()
 filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
 
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+
+execute "set rtp+=" . g:opamshare . "/ocp-indent/vim"
+execute "set rtp+=" . g:opamshare . "/ocp-build/vim"
+
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+execute "helptags " . g:opamshare . "/merlin/vim/doc"
 
 "
 " set
@@ -364,7 +372,7 @@ autocmd InsertLeave *            set nocursorline
 autocmd InsertEnter *            set cursorline
 
 autocmd Syntax cpp               call EnhanceSyntax()
-autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
+" autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 autocmd Syntax gitcommit         set textwidth=72
 
@@ -401,6 +409,8 @@ let g:syntastic_tex_checkers       = ['chktex']  " lacheck = big pile of shit
 " Warning 11: ... should be \ldots
 let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
 
+let g:syntastic_ocaml_checkers     = ['merlin']
+
 let g:syntastic_error_symbol       = '✗'
 let g:syntastic_warning_symbol     = '⚠'
 
@@ -422,7 +432,6 @@ if has("mac")
     let g:ackprg              = "ack -H --nocolor --nogroup --column"
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
-"     let CoqIDE_coqtop = "/Users/xo/Library/opam/coq/system/bin/coqtop.opt"
 
 elseif has("unix")
 
@@ -445,6 +454,7 @@ let g:airline_symbols = {}
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
+
 
 if has("gui_running")
 
