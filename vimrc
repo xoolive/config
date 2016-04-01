@@ -366,16 +366,17 @@ autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
+autocmd BufEnter *.rb            set shiftwidth=2 tabstop=2
 
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 
 autocmd InsertLeave *            set nocursorline
 autocmd InsertEnter *            set cursorline
 
-autocmd Syntax cpp               call EnhanceSyntax()
-" autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
+autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax gitcommit         set textwidth=72
+" autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 
 autocmd BufNewFile,BufReadPost *.md set filetype=pandoc
 
@@ -387,6 +388,9 @@ let g:airline#extensions#hunks#non_zero_only = 1
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
+
+let g:vimclojure#HighlightBuiltins = 1
+let g:vimclojure#ParenRainbow      = 1
 
 " let g:CoqIDEDefaultMap             = 1
 
@@ -481,4 +485,3 @@ else
     let g:airline_theme="lucius"
 
 endif
-
