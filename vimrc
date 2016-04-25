@@ -79,6 +79,9 @@ Bundle 'davidhalter/jedi-vim'
 " Working with Clojure
 Bundle 'vim-scripts/VimClojure.git'
 
+" Working with Scala
+Bundle 'derekwyatt/vim-scala'
+
 " Working with R
 Bundle 'vim-scripts/Conque-Shell.git'
 Bundle 'jcfaria/Vim-R-plugin.git'
@@ -356,6 +359,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 autocmd BufEnter *               set  shiftwidth=4 tabstop=4
 autocmd BufEnter *.R             set  comments+=b:#'
 autocmd BufEnter *.c,*.cpp,*.h,*.hpp set  shiftwidth=2 tabstop=2
+autocmd BufEnter *.ela           set  filetype=pamela
 autocmd BufEnter *.gamme         set  filetype=gamme
 autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
