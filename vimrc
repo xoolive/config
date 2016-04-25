@@ -359,9 +359,10 @@ autocmd BufEnter *.c,*.cpp,*.h,*.hpp set  shiftwidth=2 tabstop=2
 autocmd BufEnter *.gamme         set  filetype=gamme
 autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
+autocmd BufEnter *.smt2          set  shiftwidth=2 tabstop=2 filetype=smt2
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
-autocmd BufEnter *.rb            set shiftwidth=2 tabstop=2
+autocmd BufEnter *.rb            set  shiftwidth=2 tabstop=2
 
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 
