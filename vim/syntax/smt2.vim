@@ -2,7 +2,7 @@
 " syntax/smt2.vim
 
 syn match   smtComment  contains=@Spell "\v\s*;.*"
-syn match   smtTypes    /\v[A-Z][a-z\-\.]*/
+syn match   smtTypes    /\v[A-Z][a-z\-\.0-9_]*/
 syn match   smtLogic    contains=@Spell "\vQF_.*"
 syn match   smtOption   contains=@Spell "\v\:[A-Za-z\-\.]*"
 syn match   smtSymbols  /\v[=><~&|+\-\*\/%@#]+/
@@ -33,6 +33,7 @@ syn keyword smtBuiltins extract repeat bvredor bvredand bvcomp bvshl bvlshr
 syn keyword smtBuiltins bvashr rotate_left rotate_right get-assertions
 
 syn region  smtString   contains=@Spell start=/"/ skip=/\\\\\|\\"/ end=/"/
+syn region  smtComment  contains=@Spell start=/|/ skip=/\\\\\|\\"/ end=/|/
 
 if version >= 508 || !exists("did_smt2_syntax_inits")
 
