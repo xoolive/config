@@ -359,14 +359,17 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 autocmd BufEnter *               set  shiftwidth=4 tabstop=4
 autocmd BufEnter *.R             set  comments+=b:#'
 autocmd BufEnter *.c,*.cpp,*.h,*.hpp set  shiftwidth=2 tabstop=2
-autocmd BufEnter *.ela           set  filetype=pamela
-autocmd BufEnter *.gamme         set  filetype=gamme
 autocmd BufEnter SCons*,*.scons  set  filetype=scons
 autocmd BufEnter *.i             set  filetype=cpp
-autocmd BufEnter *.smt2          set  shiftwidth=2 tabstop=2 filetype=smt2
 autocmd BufEnter *.java          set  cindent
 autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
 autocmd BufEnter *.rb            set  shiftwidth=2 tabstop=2
+
+" work
+autocmd BufEnter *.ela           set filetype=pamela
+autocmd BufEnter *.ele,*.els     set filetype=electrum
+autocmd BufEnter *.gamme         set filetype=gamme
+autocmd BufEnter *.smt2          set shiftwidth=2 tabstop=2 filetype=smt2
 
 autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 
@@ -376,7 +379,6 @@ autocmd InsertEnter *            set cursorline
 autocmd Syntax clojure           set shiftwidth=2 tabstop=2
 autocmd Syntax cpp               call EnhanceSyntax()
 autocmd Syntax gitcommit         set textwidth=72
-" autocmd Syntax ocaml             set shiftwidth=2 tabstop=2
 
 autocmd BufNewFile,BufReadPost *.md set filetype=pandoc
 
