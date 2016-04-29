@@ -404,11 +404,6 @@ let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
 
 let g:syntastic_ocaml_checkers     = ['merlin']
 
-let g:syntastic_error_symbol=' '
-let g:syntastic_style_error_symbol=' '
-let g:syntastic_warning_symbol=' '
-let g:syntastic_style_warning_symbol=' '
-
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = '⮀'
 let g:airline_left_alt_sep = '⮁'
@@ -420,14 +415,20 @@ let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
 
 let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_modified = ''
 let g:gitgutter_sign_removed = '✗'
+
+let g:syntastic_error_symbol=' '
+let g:syntastic_style_error_symbol=' '
+let g:syntastic_warning_symbol=' '
+let g:syntastic_style_warning_symbol=' '
 
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 
 if has("mac")
-    let g:clang_library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+    let g:libclang_path = system('mdfind -name libclang.dylib')
+    let g:clang_library_path = substitute(libclang_path,'\n$','','''')
 elseif has("unix")
     let g:clang_library_path = '/usr/lib/llvm-3.6/lib'
 endif
@@ -458,6 +459,8 @@ if has("gui_running")
     if has("mac")
         set gfn=Menlo:h12
         set gfn=Menlo\ for\ Powerline:h12
+        " https://github.com/ryanoasis/nerd-fonts
+        set gfn=Literation\ Mono\ Powerline\ Nerd\ Font\ Plus\ Octicons:h12
         set lines=50
     elseif has("unix")
         set gfn=Monospace\ 11
