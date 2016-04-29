@@ -86,9 +86,6 @@ Bundle 'derekwyatt/vim-scala'
 Bundle 'vim-scripts/Conque-Shell.git'
 Bundle 'jcfaria/Vim-R-plugin.git'
 
-" Working with OCaml
-" Bundle 'vim-scripts/omlet.vim.git'
-
 " Working with coq
 " Bundle 'jvoorhis/coq.vim'
 " Bundle 'xoolive/CoqIDE'
@@ -323,12 +320,6 @@ function! s:DiffWithSVNCheckedOut()
 endfunction
 com! DiffSVN call s:DiffWithSVNCheckedOut()
 
-" Add highlighting for function definition in C++
-function! EnhanceSyntax()
-    syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
-    hi def link cppFuncDef Special
-endfunction
-
 " Tabularize related
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
@@ -356,31 +347,26 @@ command! RNl if (&rnu) <Bar> set nornu <Bar> else <Bar> set rnu <Bar> endif
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \ | exe "normal g`\"" | endif
 
-autocmd BufEnter *               set  shiftwidth=4 tabstop=4
-autocmd BufEnter *.R             set  comments+=b:#'
-autocmd BufEnter *.c,*.cpp,*.h,*.hpp set  shiftwidth=2 tabstop=2
-autocmd BufEnter SCons*,*.scons  set  filetype=scons
-autocmd BufEnter *.i             set  filetype=cpp
-autocmd BufEnter *.java          set  cindent
-autocmd BufEnter CMakeLists.txt  set  comments+=b:#' shiftwidth=2 tabstop=2
-autocmd BufEnter *.rb            set  shiftwidth=2 tabstop=2
 
-" work
+autocmd BufEnter SCons*,*.scons  set filetype=scons
+autocmd BufEnter *.i             set filetype=cpp
+
 autocmd BufEnter *.ela           set filetype=pamela
 autocmd BufEnter *.ele,*.els     set filetype=electrum
 autocmd BufEnter *.gamme         set filetype=gamme
-autocmd BufEnter *.smt2          set shiftwidth=2 tabstop=2 filetype=smt2
-
-autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
+autocmd BufEnter *.smt2          set filetype=smt2
 
 autocmd InsertLeave *            set nocursorline
 autocmd InsertEnter *            set cursorline
 
-autocmd Syntax clojure           set shiftwidth=2 tabstop=2
-autocmd Syntax cpp               call EnhanceSyntax()
-autocmd Syntax gitcommit         set textwidth=72
+autocmd FileType clojure,c,cpp,ruby,cmake   setl shiftwidth=2 tabstop=2
+autocmd FileType pamela,electrum,gamme,smt2 setl shiftwidth=2 tabstop=2
+autocmd FileType r,cmake                    setl comments+=b:#'
+autocmd FileType java                       setl cindent
 
-autocmd BufNewFile,BufReadPost *.md set filetype=pandoc
+autocmd Syntax gitcommit         setl textwidth=72
+
+autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 
 "
 " let
@@ -401,9 +387,9 @@ let g:EnhCommentifyPretty          = "yes"
 let g:EnhCommentifyTraditionalMode = "no"
 let g:EnhCommentifyUseSyntax       = "yes"
 
-let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#filetypes#handled         = ["pandoc", "markdown"]
 let g:pandoc#filetypes#pandoc_markdown = 0
-let g:pandoc#modules#disabled = ["folding"]
+let g:pandoc#modules#disabled          = ["folding"]
 
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
@@ -418,21 +404,33 @@ let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
 
 let g:syntastic_ocaml_checkers     = ['merlin']
 
-let g:syntastic_error_symbol       = '✗'
-let g:syntastic_warning_symbol     = '⚠'
+let g:syntastic_error_symbol=' '
+let g:syntastic_style_error_symbol=' '
+let g:syntastic_warning_symbol=' '
+let g:syntastic_style_warning_symbol=' '
+
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols = {}
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✗'
 
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
+
 if has("mac")
     let g:clang_library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
 elseif has("unix")
-    let g:clang_library_path = '/usr/lib/llvm-3.4/lib'
+    let g:clang_library_path = '/usr/lib/llvm-3.6/lib'
 endif
-
-let omlet_indent                   = 2
-let omlet_indent_let               = 0
-let omlet_indent_match             = 0
-let omlet_indent_function          = 0
 
 if has("mac")
 
@@ -451,17 +449,6 @@ elseif has("win32")
     let tagbar_ctags_bin      = 'ctags'
 
 endif
-
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols = {}
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-
 
 if has("gui_running")
 
