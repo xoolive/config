@@ -354,7 +354,7 @@ autocmd BufEnter *.i             set filetype=cpp
 autocmd BufEnter *.ela           set filetype=pamela
 autocmd BufEnter *.ele,*.els     set filetype=electrum
 autocmd BufEnter *.gamme         set filetype=gamme
-autocmd BufEnter *.smt2          set filetype=smt2
+autocmd BufEnter *.smt2,*.smt    set filetype=smt2
 
 autocmd InsertLeave *            set nocursorline
 autocmd InsertEnter *            set cursorline
