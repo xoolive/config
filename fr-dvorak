@@ -283,8 +283,8 @@ xkb_symbols "dvorak" {
     key <AD06>  { [          h,        H,             eth,            ETH ] };
     key <AD07>  { [          v,        V              ] };
     key <AD08>  { [          c,        C,       copyright,     registered ] };
-    key <AD09>  { [          m,        M,              mu,             mu ] };
-    key <AD10>  { [          k,        K,          dollar,         dollar ] };
+    key <AD09>  { [          m,        M,              mu,         emdash ] };
+    key <AD10>  { [          k,        K,          dollar,         endash ] };
     key <AD11>  { [     egrave,   Egrave,        sterling,       sterling ] };
     key <AD12>  { [          z,        Z,             yen,            yen ] };
 

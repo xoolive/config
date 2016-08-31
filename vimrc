@@ -71,7 +71,7 @@ Bundle 'jez/vim-superman'
 
 " Convenient for C/C++
 Bundle 'vim-scripts/a.vim'
-Bundle 'Rip-Rip/clang_complete.git'
+Bundle 'myint/clang_complete.git'
 
 " Working with Python
 Bundle 'davidhalter/jedi-vim'
@@ -103,6 +103,9 @@ Bundle 'honza/vim-snippets'
 
 " Distraction-free writing
 Bundle 'junegunn/goyo.vim'
+
+" Alloy
+Bundle 'runoshun/vim-alloy'
 
 if has("mac")
     Bundle 'http://git.code.sf.net/p/vim-latex/vim-latex'
@@ -236,9 +239,9 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
 
 if has("unix")
-    nmap <Leader>1 :winsize 83 50<CR>
-    nmap <Leader>2 :winsize 123 50<CR>
-    nmap <Leader>3 :winsize 163 50<CR>
+    nmap <Leader>1 :winsize 83 55<CR>
+    nmap <Leader>2 :winsize 123 55<CR>
+    nmap <Leader>3 :winsize 163 55<CR>
 elseif has("win32")
     nmap <Leader>1 :winsize 83 55<CR>
     nmap <Leader>2 :winsize 123 55<CR>
@@ -289,13 +292,13 @@ vnoremap <Up> k
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 " Highlight characters over column 85
-match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
+" match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
 syntax match DoubleSpace /  \+/
 highlight link DoubleSpace MoreMsg
 
-au BufEnter *.md match MoreMsg '\(porcupine\)'
-au BufLeave *.md match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
+" au BufEnter *.md match MoreMsg '\(porcupine\)'
+" au BufLeave *.md match MoreMsg /\(.\+\s\+$\|\%>85v.\+\)/
 
 "
 " function
@@ -350,6 +353,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 
 autocmd BufEnter SCons*,*.scons  set filetype=scons
 autocmd BufEnter *.i             set filetype=cpp
+autocmd BufEnter *.md            set filetype=pandoc
 
 autocmd BufEnter *.ela           set filetype=pamela
 autocmd BufEnter *.ele,*.els     set filetype=electrum
@@ -430,7 +434,8 @@ if has("mac")
     let g:libclang_path = system('mdfind -name libclang.dylib')
     let g:clang_library_path = substitute(libclang_path,'\n$','','''')
 elseif has("unix")
-    let g:clang_library_path = '/usr/lib/llvm-3.6/lib'
+    let g:libclang_path = system('locate libclang.so | grep .so$')
+    let g:clang_library_path = substitute(libclang_path,'\n$','','''')
 endif
 
 if has("mac")
@@ -465,7 +470,8 @@ if has("gui_running")
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
-        set lines=50
+        set gfn=LiterationMonoPowerline\ Nerd\ Font\ 11
+        set lines=55
     elseif has("win32")
         set gfn=Lucida_Console:h10:cANSI
         set gfn=Consolas\ for\ Powerline\ FixedD:h11:cDEFAULT
