@@ -18,6 +18,12 @@ if has("win32")
     let $VIMFILES=expand("D:\xolive\Documents\github\config\vim")
 end
 
+if has("gui")
+    if has("macos")
+        set pythonhome="/usr/local/Frameworks/Python.framework/Versions/3.5/"
+    end
+end
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -69,18 +75,24 @@ Bundle 'vim-scripts/utl.vim.git'
 " }
 Bundle 'jez/vim-superman'
 
+Bundle 'Valloric/YouCompleteMe'
+
 " Convenient for C/C++
 Bundle 'vim-scripts/a.vim'
-Bundle 'myint/clang_complete.git'
 
 " Working with Python
 Bundle 'davidhalter/jedi-vim'
+Bundle 'jmcantrell/vim-virtualenv'
+Bundle 'hynek/vim-python-pep8-indent'
 
 " Working with Clojure
 Bundle 'vim-scripts/VimClojure.git'
 
 " Working with Scala
 Bundle 'derekwyatt/vim-scala'
+
+" Working with Rust
+Bundle 'rust-lang/rust.vim'
 
 " Working with R
 Bundle 'vim-scripts/Conque-Shell.git'
@@ -119,14 +131,6 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 filetype plugin indent on      " enable filetype detection
 behave xterm                   " do not use this stupid select mode
-
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-let $PATH .= ':' . substitute(system('opam config var bin'),'\n$','','''')
-
-execute "set rtp+=" . g:opamshare . "/ocp-indent/vim"
-
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-execute "helptags " . g:opamshare . "/merlin/vim/doc"
 
 "
 " set
@@ -377,6 +381,7 @@ autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 "
 
 let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#virtualenv#enabled = 1
 
 let g:vimrplugin_conqueplugin      = 1
 let g:vimrplugin_conquevsplit      = 0
@@ -405,8 +410,8 @@ let g:syntastic_tex_checkers       = ['chktex']  " lacheck = big pile of shit
 " Warning 8: Wrong length of dash
 " Warning 11: ... should be \ldots
 let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
-
 let g:syntastic_ocaml_checkers     = ['merlin']
+let g:syntastic_python_checkers    = ['flake8', ]
 
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = '⮀'
@@ -427,16 +432,12 @@ let g:syntastic_style_error_symbol=' '
 let g:syntastic_warning_symbol=' '
 let g:syntastic_style_warning_symbol=' '
 
+let g:virtualenv_directory=$HOME."/Library/virtualenv"
+
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
 
-if has("mac")
-    let g:libclang_path = system('mdfind -name libclang.dylib')
-    let g:clang_library_path = substitute(libclang_path,'\n$','','''')
-elseif has("unix")
-    let g:libclang_path = system('locate libclang.so | grep .so$')
-    let g:clang_library_path = substitute(libclang_path,'\n$','','''')
-endif
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 if has("mac")
 
