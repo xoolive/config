@@ -105,6 +105,7 @@ Bundle 'jcfaria/Vim-R-plugin.git'
 " Working with Markdown/Pandoc
 Bundle 'vim-pandoc/vim-pandoc'
 Bundle 'vim-pandoc/vim-pandoc-syntax'
+Bundle 'vim-pandoc/vim-markdownfootnotes'
 Bundle 'reedes/vim-pencil'
 
 " For snippets
@@ -467,7 +468,8 @@ if has("gui_running")
         set gfn=Menlo\ for\ Powerline:h12
         " https://github.com/ryanoasis/nerd-fonts
         set gfn=Literation\ Mono\ Powerline\ Nerd\ Font\ Plus\ Octicons:h12
-        set lines=50
+        set gfn=InputMono\ Light:h11
+        set lines=55
     elseif has("unix")
         set gfn=Monospace\ 11
         set gfn=DejaVuSans\ Mono\ for\ Powerline\ 11
