@@ -14,13 +14,7 @@ alias psu="ps -U `echo $USER`"
 alias lsn="ls --color=no"
 alias rmswp="find . -name '.*.sw[op]' | xargs rm"
 
-alias -g A="| awk"
-alias -g C='| wc -l'
 alias -g G="| grep"
 alias -g L="| less"
 alias -g S="| sed"
-alias -g T='| tail'
 alias -g X="| xargs"
-alias -g DN="/dev/null"
-alias -g SU="| sort | uniq"
-alias -g TL='| tail -20'

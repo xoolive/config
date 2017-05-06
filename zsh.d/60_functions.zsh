@@ -41,7 +41,7 @@ if [[ `uname -s` = "Linux" ]]; then
 fi
 
 function vman {
-if [[ `uname -s` -eq "Darwin" ]]; then
+if [[ `uname -s` = "Darwin" ]]; then
     mvim -c "SuperMan $*"
 else
     gvim -c "SuperMan $*"
