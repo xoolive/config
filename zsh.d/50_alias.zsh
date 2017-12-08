@@ -1,6 +1,7 @@
 unamestr=`uname`
 if [[ $unamestr == 'Linux' ]]; then
     alias ls="ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable"
+    alias open="xdg-open"
 fi
 if [[ $unamestr == 'Darwin' ]]; then
     alias ls="ls -G"
