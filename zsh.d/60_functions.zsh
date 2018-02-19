@@ -3,6 +3,10 @@ function addpk {
     gpg –armor –export $1 | sudo apt-key add -
 }
 
+function deactivate {
+
+}
+
 function activate {
     if [[ -z $1 ]]; then
         echo "Usage: activate [virtualenv/opamroot name]"
@@ -18,7 +22,16 @@ function activate {
         fi
     fi
     if [[ `uname -s` = "Linux" ]]; then
-        if [[ -d $HOME/.virtualenv/$1 ]]; then
+        if [[ -d $HOME/.conda/envs/$1 ]]; then
+            source /opt/intel/intelpython3/bin/activate $1
+            # switch to a virtualenv-like prompt
+            export PS1=$CONDA_PS1_BACKUP
+            export VIRTUAL_ENV=$CONDA_DEFAULT_ENV
+            function deactivate {
+                unset VIRTUAL_ENV
+                source deactivate
+            }
+        elif [[ -d $HOME/.virtualenv/$1 ]]; then
             source $HOME/.virtualenv/$1/bin/activate
         elif [[ -d $HOME/.opamenv/$1 ]]; then
             eval `opam config env --root=$HOME/.opamenv/$1`
@@ -36,7 +49,7 @@ fi
 
 if [[ `uname -s` = "Linux" ]]; then
     local envdirs
-    envdirs=($HOME/.virtualenv $HOME/.opamenv)
+    envdirs=($HOME/.conda/envs $HOME/.virtualenv $HOME/.opamenv)
     compdef '_files -W envdirs' activate
 fi
 
