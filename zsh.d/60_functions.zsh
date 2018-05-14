@@ -105,6 +105,10 @@ function twhich {
     echo "$output" | tr ' ' '\n' | tail -n 1
 }
 
+function lpresume {
+    lpstat | cut -f 1 -d " " | xargs lp -H resume -i
+}
+
 # I like it!
 autoload -U zmv
 

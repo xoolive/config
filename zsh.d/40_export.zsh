@@ -3,9 +3,6 @@ export HISTFILE=$HOME/.history
 export HISTIGNORE="cd:ls:[bf]g:clear"
 export HISTORY=10000
 export SAVEHIST=10000
-export LANG='fr_FR.UTF-8'
-export LANGUAGE=fr_FR.UTF-8
-export LC_ALL='fr_FR.UTF-8'
 
 # https://geoff.greer.fm/lscolors/
 export LSCOLORS=GxfxhxdxCxegedabagacad
