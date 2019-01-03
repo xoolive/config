@@ -27,8 +27,12 @@ function activate {
             # switch to a virtualenv-like prompt
             export PS1=$CONDA_PS1_BACKUP
             export VIRTUAL_ENV=$CONDA_DEFAULT_ENV
+            export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+#            export LD_LIBRARY_PATH=/opt/intel/intelpython3/lib/:$LD_LIBRARY_PATH
+#            export LD_LIBRARY_PATH=$HOME/.conda/envs/$1/lib/:$LD_LIBRARY_PATH
             function deactivate {
                 unset VIRTUAL_ENV
+                export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH
                 source deactivate
             }
         elif [[ -d $HOME/.virtualenv/$1 ]]; then
@@ -52,53 +56,6 @@ if [[ `uname -s` = "Linux" ]]; then
     envdirs=($HOME/.conda/envs $HOME/.virtualenv $HOME/.opamenv)
     compdef '_files -W envdirs' activate
 fi
-
-function unpack {
-
-    # unpack: Extract common file formats
-    # Dependencies: unrar, unzip, p7zip-full
-    # Author: Patrick Brisbin
-
-    # Display usage if no parameters given
-    if [[ -z "$@" ]]; then
-        echo "${0##*/} <archive> - extract common file formats"
-        return
-    fi
-
-    # Required program(s)
-    req_progs=(7zr unrar unzip)
-    for p in ${req_progs[@]}; do
-        hash "$p" 2>&- || \
-        { echo >&2 "Required program \"$p\" not installed."; return; }
-    done
-
-    # Test if file exists
-    if [ ! -f "$@" ]; then
-        echo "File "$@" doesn't exist"
-        return
-    fi
-
-    # Extract file by using extension as reference
-    case "$@" in
-        *.7z ) 7zr x "$@" ;;
-        *.tar.bz2 ) tar xvjf "$@" ;;
-        *.bz2 ) bunzip2 "$@" ;;
-        *.deb ) ar vx "$@" ;;
-        *.tar.gz ) tar xvzf "$@" ;;
-        *.gz ) gunzip "$@" ;;
-        *.tar ) tar xvf "$@" ;;
-        *.tbz2 ) tar xvjf "$@" ;;
-        *.tar.xz ) tar xvf "$@" ;;
-        *.tgz ) tar xvzf "$@" ;;
-        *.rar ) unrar x "$@" ;;
-        *.zip ) unzip "$@" ;;
-        *.Z ) uncompress "$@" ;;
-        * ) echo "Unsupported file format" ;;
-    esac
-}
-
-compdef '_files -g "*.{7z,tar.bz2,bz2,deb,tar.gz,gz,tar,tbz2,tax.xz,tgz,rar,zip,Z}"' unpack
-
 
 function twhich {
     output=$(type -S $1) || {echo >&2 "$output" && return 1;}

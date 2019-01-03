@@ -14,7 +14,8 @@ end
 
 if has('gui')
     if has('macos')
-        set pythonhome="/usr/local/Frameworks/Python.framework/Versions/3.6/"
+        set pythonthreehome="/usr/local/Cellar/python/3.6.0/Frameworks/Python.framework/Versions/3.6/"
+        set pythonthreedll="/usr/local/Cellar/python/3.6.0/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib"
     end
 end
 
@@ -59,6 +60,7 @@ Plugin 'godlygeek/tabular.git'         " csv-like alignment
 Plugin 'sheerun/vim-polyglot'          " support for maaaany languages
 Plugin 'w0rp/ale'                      " async version of syntastic
 Plugin 'Valloric/YouCompleteMe'        " all kind of completions
+Plugin 'ambv/black'
 
 Plugin 'vim-scripts/a.vim'             " Good old switch :A for C/C++
 
@@ -72,6 +74,8 @@ Plugin 'lervag/vimtex'
 
 " Easymotion
 Plugin 'easymotion/vim-easymotion'
+" csv
+Plugin 'chrisbra/csv.vim'
 
 " Alloy
 " Plugin 'runoshun/vim-alloy'
@@ -130,6 +134,7 @@ set showmatch                  " briefly jump to the matching (,),[,],{,}
 set smartcase                  " override ignorecase if uppercase present
 set smarttab                   " tab in front of a blank line is rel to sw
 set softtabstop=4              " number of spaces while editing
+set splitright
 set suffixes+=.aux,.bak,.bbl,.blg,.brf,.cb,.dvi,.idx,.ilg,.ind,.info,.inx,.log
 set suffixes+=.o,.obj,.out,.swp,.toc,~
 set tabstop=4                  " what is a tab?
@@ -272,9 +277,14 @@ highlight link DoubleSpace MoreMsg
 
 " theme
 
-let g:airline_theme='powerlineish'
-let g:seoul256_background = 234
 colorscheme seoul256
+
+if has("gui_running")
+    let g:seoul256_background = 234
+    let g:airline_theme='powerlineish'
+else
+    let g:airline_theme='lucius'
+endif
 
 "
 " function
@@ -282,6 +292,7 @@ colorscheme seoul256
 "  TIP #1030
 function! s:DiffWithSaved()
     let l:filetype=&filetype
+    diffthis
     vnew | r # | normal 1Gdd
     diffthis
     exe 'setlocal bt=nofile bh=wipe nobl noswf ro ft=' . l:filetype
@@ -347,6 +358,7 @@ let g:airline#extensions#virtualenv#enabled = 1
 " let g:EnhCommentifyTraditionalMode = "no"
 " let g:EnhCommentifyUseSyntax       = "yes"
 
+let g:polyglot_disabled            = ['latex']
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
@@ -359,8 +371,6 @@ let g:Tex_DefaultTargetFormat      = 'pdf'
 "
 " let g:syntastic_tex_chktex_args    = "-n1 -n6 -n8 -n11"
 " let g:syntastic_ocaml_checkers     = ['merlin']
-" let g:syntastic_python_checkers    = ['flake8', 'mypy',]
-" let g:syntastic_python_mypy_args = "--strict-optional --ignore-missing-imports"
 
 let g:ale_linters = {
 \ 'python': ['flake8', 'mypy'],
@@ -372,12 +382,17 @@ let g:ale_fixers = {
 \ 'markdown': ['prettier'],
 \ }
 
-let g:ale_python_flake8_executable = 'python3'
-let g:ale_python_flake8_args = '-m flake8'
-let g:ale_completion_enabled = 1
+let g:black_linelength = 80
+let g:black_skip_string_normalization = 0
+
+"let g:ale_python_flake8_executable = 'python3'
+"let g:ale_python_flake8_options = '-m flake8'
+"let g:ale_completion_enabled = 1
 let g:ale_python_mypy_options = '--strict-optional --ignore-missing-imports'
-let g:ale_sign_error=''
-let g:ale_sign_warning=''
+let g:ale_sign_error=''  " \uf05e
+let g:ale_sign_warning=''  " \uf071
+"   \uf110
+"   \uf00c
 
 let g:NERDTreeIndicatorMapCustom = {
     \ 'Modified'  : '✹',
@@ -400,8 +415,8 @@ let g:airline_symbols = {}
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
-let g:airline#extensions#ale#error_symbol = '⭤'
-let g:airline#extensions#ale#warning_symbol = '!'
+let g:airline#extensions#ale#error_symbol = ''
+let g:airline#extensions#ale#warning_symbol = ''
 let g:airline#extensions#ale#open_lnum_symbol = '('
 
 let g:gitgutter_sign_added = ''
@@ -417,18 +432,12 @@ let g:ycm_python_binary_path = '~/.virtualenv/intel/bin/python'
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 if has('mac')
-
     let g:Tex_ViewRule_pdf    = 'Preview'
     let g:Tex_CompileRule_pdf = 'xelatex'
-
 elseif has('unix')
-
     let g:Tex_CompileRule_pdf = 'xelatex'
-
 elseif has('win32')
-
     let g:tagbar_ctags_bin      = 'ctags'
-
 endif
 
 if has('gui_running')
