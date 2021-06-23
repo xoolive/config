@@ -11,6 +11,7 @@ fi
 alias ll="ls -l"
 alias lsn="ls --color=no"
 
+alias fix='reset; stty sane; tput rs1; clear; echo -e "\033c"'
 alias rmswp="find . -name '.*.sw[op]' | xargs rm"
 
 alias psu="ps -U $USER"
