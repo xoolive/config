@@ -1,8 +1,5 @@
 # alias
-git config --global alias.lol "log --pretty=oneline --abbrev-commit --graph --decorate"
-git config --global alias.los "log --pretty=oneline --abbrev-commit -10 --decorate"
 git config --global alias.root "rev-parse --show-toplevel"
-git config --global alias.up '!git remote update -p; git merge --ff-only @{u}'
 
 # color
 git config --global color.branch auto

@@ -1,19 +1,30 @@
-# Automatic selection of Lyon 1 repository
-options(repos=c("http://cran.univ-lyon1.fr"))
-# Delete the continuation character and be able to copy-paste commands
-options(continue="    ")
-# Leave me one core free when you do your shit
-options(mc.cores=3)
+.First <- function() {
+  options(
+    repos = c(
+      # "Univ. Montpellier" = "https://ftp.igh.cnrs.fr",
+      "Univ. Lyon" = "http://cran.univ-lyon1.fr",
+      NULL
+    ),
+    keep.source = TRUE,
+    keep.source.pkgs = TRUE,
+    browserNLdisabled = TRUE,
+    deparse.max.lines = 2,
+    mc.cores = 6,
+    papersize="a4",
+    chmhelp=TRUE,
+    tinytex.verbose = TRUE,
+    prompt = "> ",
+    continue = " ", # `continue` prompt, a space is good for easy copy & paste
+    # xaringan's Infinitr Moon Reader:
+    # daemonized mode so that it does not block your R session
+    servr.daemon = TRUE
+    )
 
-# Dynamic prompt with current time
-updatePrompt <- function(...) {
-    dirs <- strsplit(getwd(),"/")[[1]]
-    options(menu.graphics=FALSE,
-            prompt=paste("\001[01;32m\002", format(Sys.time(),"[%H:%M]"),
-                         " R> \001[00m\002", sep=""))
-    return(invisible(TRUE))
+  # VSCode options
+  options(
+    languageserver.formatting_style = function(options) {
+      styler::tidyverse_style(scope = "indention", indent_by = options$tabSize)
+    })
+
 }
-
-updatePrompt()
-invisible(addTaskCallback(updatePrompt))
 

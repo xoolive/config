@@ -24,3 +24,5 @@ alias -g G="| grep"
 alias -g L="| less"
 alias -g S="| sed"
 alias -g X="| xargs"
+
+unalias news

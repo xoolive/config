@@ -12,13 +12,6 @@ if has('win32')
     let $VIMFILES=expand('D:\xolive\Documents\github\config\vim')
 end
 
-if has('gui')
-    if has('macos')
-        set pythonthreehome="/usr/local/Cellar/python/3.6.0/Frameworks/Python.framework/Versions/3.6/"
-        set pythonthreedll="/usr/local/Cellar/python/3.6.0/Frameworks/Python.framework/Versions/3.6/lib/libpython3.6m.dylib"
-    end
-end
-
 set nocompatible    " no compatibility with legacy vi
 filetype off
 
@@ -57,9 +50,10 @@ Plugin 'godlygeek/tabular.git'         " csv-like alignment
 
 " -- programming --
 "
+let g:polyglot_disabled = ['latex']
+
 Plugin 'sheerun/vim-polyglot'          " support for maaaany languages
-Plugin 'w0rp/ale'                      " async version of syntastic
-Plugin 'Valloric/YouCompleteMe'        " all kind of completions
+Plugin 'dense-analysis/ale'            " async version of syntastic
 Plugin 'ambv/black'
 
 Plugin 'vim-scripts/a.vim'             " Good old switch :A for C/C++
@@ -79,6 +73,10 @@ Plugin 'chrisbra/csv.vim'
 
 " Alloy
 " Plugin 'runoshun/vim-alloy'
+"
+" Coq
+"Plugin 'let-def/vimbufsync'
+"Plugin 'the-lambda-church/coquille'
 
 call vundle#end()
 
@@ -171,7 +169,7 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 nmap <F2> :TagbarToggle<CR>
-nmap <F3> :NERDTree<CR>
+nmap <F3> :NERDTreeToggle<CR>
 nmap <F5> :exec '!'.getline('.')<CR>
 
 map <F4> :Isort<CR>
@@ -201,6 +199,8 @@ nmap <Leader>r :vertical resize 83<CR>
 
 nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>v :edit $MYVIMRC<CR>
+
+nmap <Leader>= :Black<CR>
 
 if has('unix')
     nmap <Leader>1 :winsize 83 55<CR>
@@ -281,9 +281,9 @@ colorscheme seoul256
 
 if has("gui_running")
     let g:seoul256_background = 234
-    let g:airline_theme='powerlineish'
+    let g:airline_theme='lessnoise'
 else
-    let g:airline_theme='lucius'
+    let g:airline_theme='lessnoise'
 endif
 
 "
@@ -346,9 +346,16 @@ autocmd BufWinEnter,BufNewFile * silent tabo           " I hate tabs!
 
 autocmd BufRead,BufNewFile,BufEnter * cd %:p:h
 
+autocmd BufWritePre *.py execute ':Black'
+
 "
 " let
 "
+
+let g:utl_cfg_hdl_mt_generic='silent !xdg-open "%p" &'
+let g:utl_cfg_hdl_scm_http_system = 'silent !xdg-open "%u" &'
+
+"silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u )' || firefox '%u' &"
 
 let g:airline#extensions#hunks#non_zero_only = 1
 let g:airline#extensions#virtualenv#enabled = 1
@@ -358,7 +365,6 @@ let g:airline#extensions#virtualenv#enabled = 1
 " let g:EnhCommentifyTraditionalMode = "no"
 " let g:EnhCommentifyUseSyntax       = "yes"
 
-let g:polyglot_disabled            = ['latex']
 let g:tex_flavor                   = 'latex'
 let g:Tex_DefaultTargetFormat      = 'pdf'
 
@@ -378,58 +384,51 @@ let g:ale_linters = {
 \ }
 
 let g:ale_fixers = {
-\ 'python': ['isort', 'yapf'],
+\ 'python': ['isort', 'black'],
 \ 'markdown': ['prettier'],
 \ }
 
 let g:black_linelength = 80
-let g:black_skip_string_normalization = 0
 
-"let g:ale_python_flake8_executable = 'python3'
-"let g:ale_python_flake8_options = '-m flake8'
-"let g:ale_completion_enabled = 1
+let g:ale_python_auto_poetry = 1
+
 let g:ale_python_mypy_options = '--strict-optional --ignore-missing-imports'
-let g:ale_sign_error=''  " \uf05e
-let g:ale_sign_warning=''  " \uf071
-"   \uf110
-"   \uf00c
-
-let g:NERDTreeIndicatorMapCustom = {
-    \ 'Modified'  : '✹',
-    \ 'Staged'    : '✚',
-    \ 'Untracked' : '✭',
-    \ 'Renamed'   : '➜',
-    \ 'Unmerged'  : '═',
-    \ 'Deleted'   : '✖',
-    \ 'Dirty'     : '✗',
-    \ 'Clean'     : '✔︎',
-    \ 'Unknown'   : '?'
-\ }
+let g:ale_sign_error='E'  " \uf05e
+let g:ale_sign_warning='W'  " \uf071
 
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols = {}
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-let g:airline#extensions#ale#error_symbol = ''
-let g:airline#extensions#ale#warning_symbol = ''
-let g:airline#extensions#ale#open_lnum_symbol = '('
+let g:airline#extensions#ale#error_symbol = 'E:'
+let g:airline#extensions#ale#warning_symbol = 'W:'
+let g:airline#extensions#ale#show_line_numbers = 1
+let g:airline#extensions#ale#open_lnum_symbol = '(L'
+let g:airline#extensions#ale#close_lnum_symbol = ')'
 
-let g:gitgutter_sign_added = ''
-let g:gitgutter_sign_modified = ''
-let g:gitgutter_sign_removed = ''
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 
-let g:virtualenv_directory=$HOME.'/.virtualenv'
+" unicode symbols
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.colnr = ' :'
+let g:airline_symbols.linenr = ' ㏑ '
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
 
 let g:clang_snippets               = 0
 let g:clang_snippets_engine        = ''
-
-let g:ycm_python_binary_path = '~/.virtualenv/intel/bin/python'
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
 if has('mac')
     let g:Tex_ViewRule_pdf    = 'Preview'
@@ -441,28 +440,15 @@ elseif has('win32')
 endif
 
 if has('gui_running')
-
+    set lines=55
     if has('mac')
-        set guifont=Menlo:h12
-        set guifont=Menlo\ for\ Powerline:h12
-        " https://github.com/ryanoasis/nerd-fonts
-        set guifont=Literation\ Mono\ Powerline\ Nerd\ Font\ Plus\ Octicons:h12
-        set guifont=InputMono\ Light:h11
-        set lines=55
+        set guifont=Fira Code:h11
+        set macligatures
     elseif has('unix')
-        set guifont=Monospace\ 11
-        set guifont=DejaVuSans\ Mono\ for\ Powerline\ 11
-        set guifont=LiterationMonoPowerline\ Nerd\ Font\ 11
         set guifont=Fira\ Mono\ for\ Powerline\ 11
         set lines=55
     elseif has('win32')
-        set guifont=Lucida_Console:h10:cANSI
         set guifont=Consolas\ for\ Powerline\ FixedD:h11:cDEFAULT
         set lines=55
     endif
-
-else
-    colorscheme koehler
-    let g:airline_theme="lucius"
-
 endif
